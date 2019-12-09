@@ -1,0 +1,4 @@
+<!--miniprogram/pages/me/me.wxml-->
+<view class="me-box">
+  <van-button type="primary" open-type="getUserInfo" bindgetuserinfo="getUserInfo" >按钮</van-button>
+</view>

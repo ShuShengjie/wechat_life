@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+    "van-button": "@vant/weapp/button"
+  },
+  "navigationBarTitleText": "用户中心"
+}

@@ -1,0 +1,14 @@
+{
+  "name": "wechat_life",
+  "version": "1.0.0",
+  "description": "enjoy_life",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "ssj",
+  "license": "ISC",
+  "dependencies": {
+    "@vant/weapp": "^1.0.0-beta.4"
+  }
+}

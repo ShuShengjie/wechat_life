@@ -1,0 +1,5 @@
+<!--index.wxml-->
+<view class="container">
+  {{showTemp? 'true' : 'false'}} 
+  <button bindtap="getCurrentPos">11</button>
+</view>
