@@ -1,5 +1,11 @@
 <!--index.wxml-->
 <view class="container">
-  {{showTemp? 'true' : 'false'}} 
-  <button bindtap="getCurrentPos">11</button>
+  {{showTemp? 'true' : 'false'}}
+  <button bindtap="getCurrentPos">获取最近三天天气</button>
+  <button bindtap="getRunData">获取近31天步数</button>
+  <view class="echarts">
+    <view class="setTotal">设置目标</view>
+    <ec-canvas id="mychart-dom-pie" canvas-id="mychart-runProcess" ec="{{ ec }}" bind:init="echartInit"></ec-canvas>
+    <view bindtap="init">点击</view>
+  </view>
 </view>
