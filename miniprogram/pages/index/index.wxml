@@ -32,6 +32,13 @@
       </view>
     </movable-view>
   </movable-area>
+  <!-- 今日天气状况 -->
+  <view class="today-weather-total">
+    <view wx:for="{{todayWeather}}">
+      <image class="today-icon" src='../../images/{{item}}.png'></image>
+      <view>{{item}}</view>
+    </view>
+  </view>
   <view class="demo">
     <button bindtap="getCurrentPos">获取最近三天天气</button>
     <button bindtap="getRunData">获取近31天步数</button>

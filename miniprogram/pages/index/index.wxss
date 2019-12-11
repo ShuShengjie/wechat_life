@@ -41,6 +41,19 @@ ec-canvas {
   justify-content: space-between;padding: 6rpx 0;
 
 }
+.today-icon{
+  width: 60rpx;
+  height: 60rpx;
+}
+.today-weather-total{
+  display: flex;
+  justify-content: space-around;
+  margin-top: 220rpx;
+  border-radius: 20rpx;
+}
+.today-weather-total>view{
+  text-align: center;
+}
 .demo{
   margin-top: 220rpx;
 }

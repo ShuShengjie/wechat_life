@@ -90,7 +90,8 @@ Page({
     weatherClass: {
       weatherList: [],
       weatherPlace: ''
-    }
+    },
+    todayWeather: ['穿衣', '感冒', '空调', '运动', '紫外线']
     // runCount: 0,
     // total: 4000,
     // ecComponent: null
@@ -170,7 +171,7 @@ Page({
       data: params,
       success: (res) => {
         console.log(res);
-        let weatherPlace = res.data.result.addressComponent.city + '  ' + res.data.result.addressComponent.district;
+        let weatherPlace = res.data.result.formatted_address;
         let weatherClass = Object.assign({}, { weatherPlace: weatherPlace})
         this.setData({
           weatherClass
