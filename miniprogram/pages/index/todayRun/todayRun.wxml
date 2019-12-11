@@ -1,0 +1,6 @@
+<!--pages/index/todayRun/todayRun.wxml-->
+
+<view class="echarts" >
+  <view class="setTotal">设置目标</view>
+  <ec-canvas oData = "{{oData}}" id="mychart-dom-todayRun" canvas-id="mychart-runProcess" ec="{{ ec }}"></ec-canvas>
+</view>

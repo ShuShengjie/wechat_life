@@ -12,6 +12,16 @@ Component({
 
     ec: {
       type: Object
+    },
+
+    oData: {
+      type: Object,
+      observer: function (newVal, oldVal) {
+        if (newVal.length == 0) {
+          return;
+        }
+        this.init();
+      }
     }
   },
 

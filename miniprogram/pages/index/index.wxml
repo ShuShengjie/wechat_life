@@ -1,11 +1,44 @@
 <!--index.wxml-->
 <view class="container">
-  {{showTemp? 'true' : 'false'}}
-  <button bindtap="getCurrentPos">获取最近三天天气</button>
-  <button bindtap="getRunData">获取近31天步数</button>
-  <view class="echarts">
+  <van-notice-bar mode="closeable" scrollable="false" text="{{barText}}" />
+  <view>{{showTemp? 'true' : 'false'}}</view>
+  <!-- 今日温度 -->
+  <view class="weather-place" wx:if="{{!isPedding}}">
+    <view>{{weatherClass.weatherPlace}}</view>
+    <view class="weather-today">
+      <view class="weather-temperature">{{weatherClass.realtime.weather.temperature}}°</view>
+      <text class="weather-tip">{{weatherClass.realtime.weather.info}}</text> |
+      <text class="weather-tip">{{weatherClass.pm25.pm25.curPm}} {{weatherClass.pm25.pm25.quality}}</text>
+      <view class="weather-tip">温馨小提示: {{weatherClass.pm25.pm25.des}}</view>
+    </view>
+  </view>
+  <!-- 近五日滑动图 -->
+  <movable-area style='width:auto'>
+    <movable-view animation scroll-x style='height:220rpx;width:1890rpx' direction='horizontal' inertia='true' out-of-bounds>
+      <view wx:for="{{weatherClass.weatherList}}" class="weather-next">
+        <view>周{{item.week}}</view>
+        <view class="week-flex">
+          <text>{{item.date}}</text>
+          <text>{{item.info.day[2]}}°/{{item.info.night[2]}}°</text>
+        </view>
+        <view class="week-flex">
+          <text>{{item.info.day[1]}}/{{item.info.night[1]}}°</text>
+          <text>icon图标</text>
+        </view>
+        <view class="week-flex">
+          <text>{{item.info.day[3]}}</text>
+          <text>{{item.info.day[4]}}</text>
+        </view>
+      </view>
+    </movable-view>
+  </movable-area>
+  <view class="demo">
+    <button bindtap="getCurrentPos">获取最近三天天气</button>
+    <button bindtap="getRunData">获取近31天步数</button>
+    <today-run oData="{{runCount}}" class="mychart-runProcess"></today-run>
+  </view>
+  <!-- <view class="echarts">
     <view class="setTotal">设置目标</view>
     <ec-canvas id="mychart-dom-pie" canvas-id="mychart-runProcess" ec="{{ ec }}" bind:init="echartInit"></ec-canvas>
-    <view bindtap="init">点击</view>
-  </view>
+  </view> -->
 </view>

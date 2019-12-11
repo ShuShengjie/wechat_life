@@ -1,0 +1,17 @@
+/* pages/index/todayRun/todayRun.wxss */
+.echarts {
+  position: relative;
+  width: 100%;
+  height:400rpx;
+}
+.setTotal{
+  position: absolute;
+  top: 65%;
+  left: 43%;
+  font-size: 28rpx;
+  color: #999;
+}
+ec-canvas {
+  width: 100%;
+  height: 100%;
+}
