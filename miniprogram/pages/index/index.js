@@ -1,6 +1,8 @@
 import * as echarts from '../../ec-canvas/echarts';
 //index.js
 const app = getApp()
+const bmap = require('../../utils/bmap-wx.min.js'); 
+
 
 // function initChart(canvas, width, height, count, total) {
 //   const chart = echarts.init(canvas, null, {
@@ -159,7 +161,6 @@ Page({
 
   //调用百度地图API获取位置详细信息
   getCity(latitude, longitude) {
-    var that = this
     var url = "https://api.map.baidu.com/reverse_geocoding/v3/";
     var params = {
       ak: "lL1PUa4x1xZSvfqT1j5fIvaQs9UtUbAp",
@@ -206,6 +207,9 @@ Page({
     let url = `https://api.avatardata.cn/Weather/Query?key=${key}&cityname=${city}`;
     wx.request({
       url: url,
+      header: {
+        'content-type': 'application/json' // 默认值
+      },
       success: (res) => {
         console.log(res);
         let lifeList = res.data.result.life.info;
@@ -226,6 +230,17 @@ Page({
    */
   onLoad: function(options) {
     this.getRunData();
+    var BMap = new bmap.BMapWX({
+      ak: 'lL1PUa4x1xZSvfqT1j5fIvaQs9UtUbAp'
+    });
+    BMap.weather({
+      success: (res) => {
+        this.setData({
+          barText: res.originalData.results[0].index[0].des
+        })
+        console.log(res, 'weawww');
+      }
+    });
     // this.ecComponent = this.selectComponent('#mychart-runProcess');
     // console.log(this.ecComponent);
   },
