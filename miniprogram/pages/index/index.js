@@ -1,311 +1,202 @@
-import * as echarts from '../../ec-canvas/echarts';
 //index.js
 const app = getApp()
-const bmap = require('../../utils/bmap-wx.min.js'); 
-
-
-// function initChart(canvas, width, height, count, total) {
-//   const chart = echarts.init(canvas, null, {
-//     width: width,
-//     height: height
-//   });
-//   canvas.setChart(chart);
-//   setOption(chart, count, total);
-
-//   return chart;
-// }
-
-// function setOption(chart, count, total) {
-//   let runCount = (count / total) * 100 || 0;
-//   let option = {
-//     backgroundColor: "transparent",
-//     series: [{
-//       color: ["#91bef0", "#DCDCDC"],
-//       name: '今日步数',
-//       type: 'pie',
-//       radius: ['85%', '100%'],
-//       avoidLabelOverlap: false,
-//       label: {
-//         normal: {
-//           show: true,
-//           position: 'center'
-//         },
-//         emphasis: {
-//           show: true,
-//           textStyle: {
-//             fontSize: '10',
-//             fontWeight: 'bold'
-//           },
-//         }
-//       },
-//       labelLine: {
-//         normal: {
-//           show: false
-//         }
-//       },
-//       data: [{
-//         value: runCount,
-//         name: count ? count : '0',
-//         label: {
-//           normal: {
-//             textStyle: {
-//               fontSize: '20',
-//               fontWeight: 'bold'
-//             },
-//           }
-//         },
-//       },
-//       {
-//         value: 100 - runCount,
-//         name: '今日步数',
-//         label: {
-//           normal: {
-//             textStyle: {
-//               fontSize: '14',
-//               color: '#999',
-//               fontWeight: 'bold'
-//             },
-//             padding: [-70, 0, 0, 0]
-//           }
-//         },
-//       }
-//       ]
-//     }]
-//   };
-//   chart.setOption(option);
-// }
-
+const bmap = require('../../utils/bmap-wx.min.js');
+import Dialog from '@vant/weapp/dialog/dialog';
+// 今日天气类
+class TodayWeather {
+  constructor(city, temp, weather, pm25, pm25Level, wind) {
+    this.city = city;
+    this.temp = temp;
+    this.weather = weather;
+    this.pm25 = pm25;
+    this.pm25Level = pm25Level;
+    this.wind = wind;
+  }
+}
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    showTemp: wx.getStorageSync('userInfo') || '',
-    ec: {
-    },
+    runCount: 0,
+    BMap: null,
     // 判断接口是否请求完
     isPedding: true,
     // 首页通知
     barText: '',
     // 天气类
-    weatherClass: {
-      weatherList: [],
-      weatherPlace: ''
-    },
-    todayWeather: ['穿衣', '感冒', '空调', '运动', '紫外线']
-    // runCount: 0,
-    // total: 4000,
-    // ecComponent: null
+    weatherClass: {},
+    // 今日显示
+    weatherToday: new TodayWeather()
   },
-  // echartInit(e) {
-  //   console.log(e, 'echarts');
-  //   initChart(e.detail.canvas, e.detail.width, e.detail.height, 0, this.data.total);
-  // },
   // 获取运动步数
   getRunData() {
     wx.getWeRunData({
-      success: (res)=> {
-        console.log(res.cloudID);
+      success: (res) => {
         let cloudId = res.cloudID;
         wx.cloud.callFunction({
           name: 'getRunData',
           data: {
             weRunData: wx.cloud.CloudID(cloudId)
           },
-          success: ({result}) => {
+          success: ({ result }) => {
             console.log(result, 'result');
             const todayRunCount = result[result.length - 1].step;
-            console.log(this, 'this');
             this.setData({
               runCount: todayRunCount
             })
-            // this.init(todayRunCount);
           }
         })
       }
     })
   },
-  // 点击按钮后初始化图表
-  // init(step) {
-  //   console.log(this.ecComponent, 1111);
-  //   this.ecComponent.init((canvas, width, height) => {
-  //     console.log(echarts);
-  //     // 获取组件的 canvas、width、height 后的回调函数
-  //     // 在这里初始化图表
-  //     const chart = echarts.init(canvas, null, {
-  //       width: width,
-  //       height: height
-  //     });
-  //     setOption(chart, step, this.data.total);
-
-  //     // 将图表实例绑定到 this 上，可以在其他成员函数（如 dispose）中访问
-  //     this.chart = chart;
-
-  //     // 注意这里一定要返回 chart 实例，否则会影响事件处理等
-  //     return chart;
-  //   });
-  // },
-  // 获取当前位置
-  getCurrentPos() {
-    wx.getLocation({
-      type: 'wgs84',
-      success: (res) => {
-        var latitude = res.latitude
-        var longitude = res.longitude
-        console.log("lat:" + latitude + "lon:" + longitude)
-        this.getCity(latitude, longitude);
-      }
-    })
-  },
-
-  //调用百度地图API获取位置详细信息
-  getCity(latitude, longitude) {
-    var url = "https://api.map.baidu.com/reverse_geocoding/v3/";
-    var params = {
-      ak: "lL1PUa4x1xZSvfqT1j5fIvaQs9UtUbAp",
-      output: "json",
-      location: latitude + "," + longitude
+  // pm2.5等级
+  getPm25Level(num) {
+    let level = '';
+    let bgColor = '';
+    switch(true) {
+      case num <= 35:
+        level = '优'
+        bgColor = 'grren';
+        break;
+      case num <= 75:
+        level = '良'
+        bgColor = 'yellow';
+        break;
+      case num <= 115:
+        level = '轻度污染'
+        bgColor = 'organge';
+        break;
+      case num <= 150:
+        level = '中度污染'
+        bgColor = 'red';
+        break;
+      case num <= 250:
+        level = '重度污染'
+        bgColor = 'pruple';
+        break;
+      default: 
+        level = '严重污染'
+        bgColor = 'brown';
     }
-    wx.request({
-      url: url,
-      data: params,
-      success: (res) => {
-        console.log(res);
-        let weatherPlace = res.data.result.formatted_address;
-        let weatherClass = Object.assign({}, { weatherPlace: weatherPlace})
-        this.setData({
-          weatherClass
-        })
-        this.getWeather(res.data.result.addressComponent.city)
-      },
-    })
+    return {
+      level,
+      bgColor
+    };
   },
-  // getWeather(city) {
-  //   var url = "https://api.seniverse.com/v3/weather/daily.json"
-  //   var params = {
-  //     location: city,
-  //     key: "SKDJ5b2kJ6_fuJFO6"
-  //   }
-  //   wx.request({
-  //     url: url,
-  //     data: params,
-  //     success: (res) => {
-  //       console.log(res);
-  //       let weatherList = res.data.results[0].daily;
-  //       this.setData({
-  //         weatherClass: { ...this.data.weatherClass, weatherList}
-  //       })
-  //       console.log(this.data.weatherClass)
-  //     },
-  //   })
-  // },
-  // 获取天气接口，之后改成云函数
-  getWeather(city) {
-    console.log(city);
-    let key = 'db2a938913344b78a12a1340ca2fcdbc';
-    let url = `https://api.avatardata.cn/Weather/Query?key=${key}&cityname=${city}`;
-    wx.request({
-      url: url,
-      header: {
-        'content-type': 'application/json' // 默认值
-      },
+  // 获取天气处理天气数据
+  getWeather() {
+    this.data.BMap.weather({
       success: (res) => {
-        console.log(res);
-        let lifeList = res.data.result.life.info;
-        let weatherList = res.data.result.weather;
-        let realtime = res.data.result.realtime;
-        let pm25 = res.data.result.pm25;
+        let barText = res.originalData.results[0].index[0].des;
+        let weaherIcon = res.originalData.results[0].index;
+        let weatherData = res.originalData.results[0].weather_data;
+        weatherData[0].date = weatherData[0].date.slice(0, 2);
+        // let weatherToday = res.currentWeather[0];
+        // 今日天气卡片类
+        let weatherToday = new TodayWeather(
+          res.currentWeather[0].currentCity,
+          res.currentWeather[0].date.split(' ')[2].slice(0, -1).slice(4),
+          res.currentWeather[0].weatherDesc,
+          res.currentWeather[0].pm25,
+          this.getPm25Level(res.currentWeather[0].pm25),
+          res.currentWeather[0].wind
+        );
         this.setData({
-          weatherClass: { ...this.data.weatherClass, lifeList, weatherList, realtime, pm25},
-          barText: lifeList['chuanyi'][1],
-          isPedding: !this.data.isPedding
+          weatherClass: { weaherIcon, weatherData },
+          weatherToday,
+          barText,
+          isPedding: false,
         })
-        console.log(this.data.weatherClass)
+        console.log(res, 'weawww');
+        console.log(this.data.weatherClass, 'dddwwww');
       }
-    })
+    });
   },
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function(options) {
+  onLoad: function (options) {
     this.getRunData();
-    var BMap = new bmap.BMapWX({
-      ak: 'lL1PUa4x1xZSvfqT1j5fIvaQs9UtUbAp'
-    });
-    BMap.weather({
-      success: (res) => {
-        this.setData({
-          barText: res.originalData.results[0].index[0].des
-        })
-        console.log(res, 'weawww');
-      }
-    });
-    // this.ecComponent = this.selectComponent('#mychart-runProcess');
-    // console.log(this.ecComponent);
+    this.setData({
+      BMap: new bmap.BMapWX({
+        ak: 'lL1PUa4x1xZSvfqT1j5fIvaQs9UtUbAp'
+      })
+    })
+    this.getWeather()
   },
   // 下拉刷新
   onPullDownRefresh() {
     this.getRunData();
+    this.getWeather()
     console.log(1);
     setTimeout(function () {
       // 不加这个方法真机下拉会一直处于刷新状态，无法复位
       wx.stopPullDownRefresh()
+      wx.pageScrollTo({
+        scrollTop: 0,
+      })
       console.log(2);
     }, 2000)
   },
+  goToLife(e) {
+    // let lifeValue = JSON.stringify(e.currentTarget.dataset.life);
+    // wx.navigateTo({
+    //   url: '/pages/lifeDetail/lifeDetail?lifeValue=' + lifeValue
+    // })
+    Dialog.alert({
+      title: '标题',
+      message: '弹窗内容',
+      confirmButtonText:"ok"
+    })
 
+  },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-    // 获取组件
-    // this.ecComponent = this.selectComponent('#mychart-dom-pie');
-    // console.log(this.ecComponent, 'eeeee');
 
   },
 
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function() {
-    this.setData({
-      showTemp: wx.getStorageSync('userInfo')
-    })
+  onShow: function () {
   },
 
   /**
    * 生命周期函数--监听页面隐藏
    */
-  onHide: function() {
+  onHide: function () {
 
   },
 
   /**
    * 生命周期函数--监听页面卸载
    */
-  onUnload: function() {
+  onUnload: function () {
 
   },
 
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
-  onPullDownRefresh: function() {
+  onPullDownRefresh: function () {
 
   },
 
   /**
    * 页面上拉触底事件的处理函数
    */
-  onReachBottom: function() {
+  onReachBottom: function () {
 
   },
 
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function() {
+  onShareAppMessage: function () {
 
   }
 })

@@ -1,59 +1,113 @@
 /**index.wxss**/
+
 .echarts {
   position: relative;
   width: 100%;
-  height:400rpx;
+  height: 400rpx;
 }
-.setTotal{
-  position: absolute;
-  top: 65%;
-  left: 43%;
-  font-size: 28rpx;
-  color: #999;
-}
-ec-canvas {
-  width: 100%;
-  height: 100%;
-}
-.weather-place{
+
+.weather-place {
+  padding: 20rpx;
   text-align: center;
 }
-.weather-temperature{
-  font-size: 90rpx;
+.weather-city{
+  font-size: 50rpx;
+  color: #999;
+}
+
+.weather-temperature {
+  font-size: 160rpx;
+  font-weight: 300;
   color: #91bef0;
 }
-.weather-tip{
+
+.weather-tip {
   font-size: 30rpx;
   color: #aaa;
 }
-.weather-next{
-  display: inline-block;
-  /* height:220rpx; */
-  width:308rpx;
-  margin-top: 20rpx;
-  padding: 10rpx 35rpx;
-  border-right: 1rpx solid #ccc;
-  background: #F8F8FF;
-  font-size: 26rpx;
-}
-.week-flex{
-  display: flex;
-  justify-content: space-between;padding: 6rpx 0;
 
+.today-icon {
+  width: 50rpx;
+  height: 50rpx;
 }
-.today-icon{
-  width: 60rpx;
-  height: 60rpx;
+
+.life-point{
+  padding: 20rpx 30rpx;
+  color: #000;
+  font-size: 30rpx;
+  font-weight: 600;
 }
-.today-weather-total{
+
+.go-life-hover{
+  background: #eee;
+}
+
+.today-weather-total {
   display: flex;
   justify-content: space-around;
-  margin-top: 220rpx;
-  border-radius: 20rpx;
+  border: 1rpx solid #efefef;
+  box-sizing: border-box;
 }
-.today-weather-total>view{
+
+.today-weather-total>view {
+  width: 20%;
+  padding: 20rpx 0;
   text-align: center;
 }
-.demo{
-  margin-top: 220rpx;
+.today-weather-total>view:not(:last-child){
+  border-right: 1rpx solid #efefef;
 }
+
+.today-weather-total .icon-title {
+  padding-top: 4rpx;
+  font-size: 25rpx;
+  color: #aaa;
+}
+.weather-box{
+  display: flex;
+  justify-content: center;
+  font-size: 30rpx;
+  color: #999;
+}
+
+.pm25-box{
+  position: relative;
+  display: inline-block;
+  margin: 0 30rpx;
+  padding: 6rpx;
+  color: #fff;
+  line-height: 30rpx;
+  border-radius: 10rpx;
+}
+.pm25-icon{
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 30rpx;
+  height: 30rpx;
+}
+.pm25-value{
+  margin-left: 45rpx;
+}
+.week-temp{
+  width: 100%;
+}
+.green{
+  background-color: #66FF00
+}
+.yellow{
+  background-color: #FFCC00;
+}
+.orange{
+  background-color: #FF9900;
+}
+.red{
+  background-color: #FF3300;
+}
+.pruple{
+  background-color: #FF00CC;
+}
+.brown{
+  background-color: #A25E5E;
+}
+

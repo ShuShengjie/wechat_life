@@ -1,0 +1,38 @@
+/* pages/index/weekTemp/weekTemp.wxss */
+
+.week-temp {
+  width: 100%;
+  height: 600rpx;
+}
+
+.week-title {
+  padding: 20rpx 30rpx;
+  color: #000;
+  font-size: 30rpx;
+  font-weight: 600;
+  border-bottom: 1rpx solid #ccc;
+}
+
+.ecahrts-box {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  /* margin: 10rpx 30rpx; */
+}
+
+ec-canvas {
+  position: absolute;
+  left: 0;
+  width: 90%;
+  height: 300rpx !important;
+}
+
+.future-box {
+  display: flex;
+  justify-content: space-between;
+}
+
+.future-item {
+  display: inline-block;
+  width: 25%;
+}

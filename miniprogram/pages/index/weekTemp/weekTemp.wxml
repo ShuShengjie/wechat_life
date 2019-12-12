@@ -1,0 +1,10 @@
+<!--pages/index/weekTemp/weekTemp.wxml-->
+<view class="week-temp">
+  <view class="week-title">近四天预报</view>
+  <view class="ecahrts-box">
+    <view class="future-box" wx:for="{{weatherData}}">
+      <view class="future-item">{{item.date}}</view>
+    </view>
+    <ec-canvas id="weekTemp" canvas-id="mychart-weekTemp" ec="{{ ec }}"></ec-canvas>
+  </view>
+</view>

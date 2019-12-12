@@ -83,8 +83,6 @@ Component({
       }
     }
   },
-  lifetimes: {
-  },
   /**
    * 组件的初始数据
    */

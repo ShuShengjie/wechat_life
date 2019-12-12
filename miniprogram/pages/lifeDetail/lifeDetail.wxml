@@ -1,0 +1,5 @@
+<!--miniprogram/pages/lifeDetail/lifeDetail.wxml-->
+<view class="lifeDetail">
+  <view>{{lifeDetail.zs}}</view>
+  <view>{{lifeDetail.des}}</view>
+</view>
