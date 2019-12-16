@@ -1,2 +1,26 @@
-<!--miniprogram/pages/edit/edit.wxml-->
-<text>miniprogram/pages/edit/edit.wxml</text>
+<view class="edit-box">
+
+  <!-- <button bind:tap="showTarget">+</button> -->
+  <button open-type="getUserInfo" bindgetuserinfo="showTarget">+</button>
+
+  <view>你有{{targetList.length}}个累计目标</view>
+  <view wx:for="{{targetList}}">
+    <view class="already-target">
+      <view>{{item.title}}</view>
+      <view wx:if="{{!item.lastUpdate}}">
+        <van-tag color="#cccccc">累计:未开始</van-tag>
+      </view>
+      <view wx:else>
+        <van-tag color="#cccccc" class="target-time">累计:{{item.time}}</van-tag>
+        <van-tag color="#cccccc">最后记录:{{item.lastUpdate}}</van-tag>
+      </view>
+    </view>
+  </view>
+
+
+
+  <van-dialog id="van-dialog" width="700rpx" use-slot show-cancel-button show="{{ showAddTarget }}" bind:confirm="addTarget" title="新的目标">
+    <input class="add-target" placeholder="列如： 学习" value="{{createTitle}}" bind:input="changeCreateTitle" />
+  </van-dialog>
+  <van-notify id="van-notify" />
+</view>

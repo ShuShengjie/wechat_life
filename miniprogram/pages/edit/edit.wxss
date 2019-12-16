@@ -1,1 +1,18 @@
 /* miniprogram/pages/edit/edit.wxss */
+.edit-box{
+  background: #ffffff;
+}
+.add-target{
+  margin: 40rpx;
+}
+.already-target{
+  margin: 3%;
+  padding: 30rpx 20rpx;
+  background: #fff;
+  border-radius: 30rpx;
+  box-sizing: border-box;
+  box-shadow: -6rpx 6rpx 5rpx #efefef;
+}
+.target-time{
+  margin-right: 30rpx;
+}

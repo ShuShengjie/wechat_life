@@ -3,7 +3,8 @@ export default {
   grid: {
     top: '15%',
     bottom: '10%',
-    left: 20,
+    left: '12%',
+    right: '12%',
     containLabel: false
   },
   xAxis: {

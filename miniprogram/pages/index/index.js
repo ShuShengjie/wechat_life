@@ -141,14 +141,9 @@ Page({
     }, 2000)
   },
   goToLife(e) {
-    // let lifeValue = JSON.stringify(e.currentTarget.dataset.life);
-    // wx.navigateTo({
-    //   url: '/pages/lifeDetail/lifeDetail?lifeValue=' + lifeValue
-    // })
-    Dialog.alert({
-      title: '标题',
-      message: '弹窗内容',
-      confirmButtonText:"ok"
+    let lifeValue = JSON.stringify(e.currentTarget.dataset.life);
+    wx.navigateTo({
+      url: '/pages/lifeDetail/lifeDetail?lifeValue=' + lifeValue
     })
 
   },

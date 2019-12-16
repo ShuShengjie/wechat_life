@@ -3,7 +3,19 @@
   <view class="week-title">近四天预报</view>
   <view class="ecahrts-box">
     <view class="future-box" wx:for="{{weatherData}}">
-      <view class="future-item">{{item.date}}</view>
+      <view class="future-item">
+        <view wx:if="{{index === 0}}" class="future-date">今天</view>
+        <view wx:else class="future-date">{{item.date}}</view>
+        <view class="future-weather">{{dayWeatherList[index]}}</view>
+        <view class="weather-icon">
+          <image wx:if="{{item.dayPictureUrl}}" src="{{item.dayPictureUrl}}"></image>
+        </view>
+        <view class="weather-icon night-weather">
+          <image wx:if="{{item.nightPictureUrl}}" src="{{item.nightPictureUrl}}"></image>
+        </view>
+        <view class="future-weather">{{nightWeatherList[index]}}</view>
+        <view class="future-wind">{{item.wind}}</view>
+      </view>
     </view>
     <ec-canvas id="weekTemp" canvas-id="mychart-weekTemp" ec="{{ ec }}"></ec-canvas>
   </view>

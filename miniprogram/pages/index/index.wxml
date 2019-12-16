@@ -17,7 +17,7 @@
   </view>
   
   <!-- 生活指数 -->
-  <view class="life-point">生活指数</view>
+  <!-- <view class="life-point">生活指数</view> -->
   <view class="today-weather-total">
     <view wx:for="{{weatherClass.weaherIcon}}" hover-class="go-life-hover" data-life="{{item}}" bindtap="goToLife">
       <image class="today-icon" src='../../images/{{item.title}}.png'></image>
@@ -34,5 +34,3 @@
     <!-- <today-run oData="{{runCount}}" class="mychart-runProcess"></today-run> -->
   </view>
 </view>
-
-<van-dialog id="van-dialog" />

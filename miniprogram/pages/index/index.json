@@ -3,8 +3,7 @@
     "ec-canvas": "../../ec-canvas/ec-canvas",
     "today-run": "../todayRun/todayRun",
     "week-temp": "../weekTemp/weekTemp",
-    "van-notice-bar": "@vant/weapp/notice-bar",
-    "van-dialog": "@vant/weapp/dialog"
+    "van-notice-bar": "@vant/weapp/notice-bar"
   },
   "navigationBarTitleText": "首页",
   "enablePullDownRefresh": true

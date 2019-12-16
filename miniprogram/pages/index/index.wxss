@@ -7,7 +7,7 @@
 }
 
 .weather-place {
-  padding: 20rpx;
+  padding: 0 20rpx 20rpx;
   text-align: center;
 }
 .weather-city{
