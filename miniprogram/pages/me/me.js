@@ -1,4 +1,5 @@
 // miniprogram/pages/me/me.js
+import request from '../../utils/request.js'
 const app = getApp()
 Page({
 
@@ -14,7 +15,13 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    
+    request({
+      url: 'http://123.207.32.32:8000/recommend'
+    }).then(res => {
+      console.log(res, 'res')
+    }).catch(err => {
+      console.log(err, 'err')
+    })
   },
   // 获取登陆信息
   getUserInfo(e) {
