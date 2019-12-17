@@ -1,0 +1,7 @@
+{
+  "component": true,
+  "usingComponents": {
+    "van-toast": "@vant/weapp/toast",
+    "van-dialog": "@vant/weapp/dialog"
+  }
+}

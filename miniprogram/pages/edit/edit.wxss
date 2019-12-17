@@ -16,3 +16,12 @@
 .target-time{
   margin-right: 30rpx;
 }
+.create-target{
+  position: fixed;
+  right: 4%;
+  bottom: 4%;
+  width: 100rpx;
+  height: 100rpx;
+  background: #91bef0;
+  border-radius: 50%;
+}

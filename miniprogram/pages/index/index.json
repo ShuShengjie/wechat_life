@@ -6,5 +6,6 @@
     "van-notice-bar": "@vant/weapp/notice-bar"
   },
   "navigationBarTitleText": "首页",
+  "backgroundTextStyle": "dark",
   "enablePullDownRefresh": true
 }

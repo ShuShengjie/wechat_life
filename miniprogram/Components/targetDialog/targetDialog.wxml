@@ -1,0 +1,15 @@
+<view>
+  <van-dialog 
+    id="van-dialog" 
+    width="700rpx" 
+    use-slot 
+    show-cancel-button 
+    show="true" 
+    bind:confirm="addTarget" 
+    bind:close="onClose" 
+    title="{{title}}">
+    <input class="add-target" placeholder="{{placeholder}}" value="{{createTitle}}" bind:input="changeCreateTitle" />
+  </van-dialog>
+
+  <van-toast id="van-toast" />
+</view> 

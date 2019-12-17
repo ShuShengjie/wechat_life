@@ -1,14 +1,7 @@
 // miniprogram/pages/edit/edit.js
 import Notify from '@vant/weapp/notify/notify';
+import Toast from '@vant/weapp/toast/toast';
 
-/**
- * 
- * 
- * 目标页应该进入获取用户参数
- * 不然无法获取用户列表
- * 
- * 
- */
 
 const globalEnv = getApp()
 Page({
@@ -19,54 +12,38 @@ Page({
   data: {
     // 新增目标弹窗
     showAddTarget: false,
-    // 新增内容
-    createTitle: '',
-    userInfo: wx.getStorageSync('userInfo') || {},
     // 目标列表
     targetList: []
   },
   // 查看是否登录，登录则弹出新增弹窗
-  showTarget(e) {
-    console.log(e);
-    let userInfo = e.detail.userInfo;
-    wx.cloud.callFunction({
-      name: 'login',
-      complete: res => {
-        userInfo.openid = res.result.openid;
-        this.setData({
-          userInfo,
-          showAddTarget: true,
-        })
-        wx.setStorageSync('userInfo', userInfo)
-      }
+  showTarget() {
+    this.setData({
+      showAddTarget: true,
     })
   },
   // 获取输入的title
   changeCreateTitle(e) {
-    console.log(e.detail.value)
     this.setData({
       createTitle: e.detail.value
     })
   },
+  // 取消弹窗
+  closeDialog(e) {
+    this.setData({
+      showAddTarget: e.detail,
+    })
+  },
   // 添加目标
-  addTarget() {
-    if (this.data.createTitle.trim() === '') {
-      Notify({ type: 'danger', message: '目标不能为空' });
-      return
-    }
-    console.log(54564456)
+  addTarget(e) {
     wx.cloud.callFunction({
       name: 'createTarget',
       data: {
-        targetTitle: this.data.createTitle,
-        userId: wx.getStorageSync('userInfo').openid
+        targetTitle: e.detail,
+        userId: wx.getStorageSync('openid')
       },
       complete: res => {
-        console.log(12321312)
         Notify({ type: 'success', message: '新增目标成功' });
-        this.setData({
-          createTitle: ''
-        })
+        this.getTargetList();
       }
     })
   },
@@ -75,7 +52,7 @@ Page({
     wx.cloud.callFunction({
       name: 'getTargetList',
       data: {
-        userId: wx.getStorageSync('userInfo').openid
+        userId: wx.getStorageSync('openid')
       },
       complete: res => {
         this.setData({
@@ -85,25 +62,42 @@ Page({
       }
     })
   },
+  // 进入详情页
+  gotoEditDetail(e) {
+    const edit = JSON.stringify(e.currentTarget.dataset.edit);
+    wx.navigateTo({
+      url: '/pages/editDetail/editDetail?edit=' + edit,
+    })
+  },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    this.getTargetList();
+    // this.getTargetList();
   },
 
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-
   },
 
   /**
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    if (!wx.getStorageSync('openid')) {
+      wx.cloud.callFunction({
+        name: 'login',
+        success: res => {
+          console.log(res);
+          wx.setStorageSync('openid', res.result.openid)
+          this.getTargetList();
+        }
+      })
+    } else {
+      this.getTargetList();
+    }
   },
 
   /**
@@ -123,8 +117,9 @@ Page({
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
-  onPullDownRefresh: function () {
 
+  // 下拉刷新
+  onPullDownRefresh() {
   },
 
   /**

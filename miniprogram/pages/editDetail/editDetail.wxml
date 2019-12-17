@@ -1,0 +1,40 @@
+<!--miniprogram/pages/editDetail/editDetail.wxml-->
+<view class="edit-detail">
+  <view>
+    <block>
+      {{editTitle}}
+      <van-icon name="edit" class="edit-title" bind:tap="editTargetTitle"/>
+    </block>
+    <van-icon name="delete" color="red" class="edit-delete" bind:tap="deleteTargetTitle"/>
+  </view>
+
+  <view class="edit-overview">统计概览</view>
+  <view class="edit-box">
+    <view class="edit-item lightblue">
+      <van-icon size="50rpx" name="underway-o" />
+      <view class="item-title">累计时间</view>
+      <view class="item-value">{{editDetails.time || '未开始'}}</view>
+    </view>
+    <view class="edit-item lmblue">
+      <van-icon size="50rpx" name="sign" />
+      <view class="item-title">创建时间</view>
+      <view class="item-value">{{editDetails.createDate}}</view>
+    </view>
+    <view class="edit-item lightgreen">
+      <van-icon size="50rpx" name="records" />
+      <view class="item-title">最近记录</view>
+      <view class="item-value">{{editDetails.lastUpdate || '未开始'}}</view>
+    </view>
+  </view>
+
+  <view class="target-record">目标记录</view>
+
+
+
+  <view class="record-icon" data-id="{{}}" data-title="{{}}" bind:tap="goToTimer">
+    <van-icon class="record" size="70rpx" color="#fff" name="records" />
+  </view>
+</view>
+
+
+<target-dialog title="修改目标" placeholder="{{editDetails.title}}" wx:if="{{showAddTarget}}" bind:addTarget="addTarget" bind:closeDialog="closeDialog"></target-dialog>

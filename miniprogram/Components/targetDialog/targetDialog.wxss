@@ -1,0 +1,5 @@
+/* Components/targetDialog/targetDialog.wxss */
+
+.add-target{
+  margin: 40rpx;
+}

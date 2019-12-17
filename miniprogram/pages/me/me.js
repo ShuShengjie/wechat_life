@@ -15,12 +15,19 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    request({
-      url: 'http://123.207.32.32:8000/recommend'
-    }).then(res => {
-      console.log(res, 'res')
-    }).catch(err => {
-      console.log(err, 'err')
+    // request({
+    //   url: 'http://123.207.32.32:8000/recommend'
+    // }).then(res => {
+    //   console.log(res, 'res')
+    // }).catch(err => {
+    //   console.log(err, 'err')
+    // })
+    wx.cloud.callFunction({
+      name: 'login',
+      success: res => {
+        console.log(res);
+        wx.setStorageSync('openid', res.result.openid)
+      }
     })
   },
   // 获取登陆信息

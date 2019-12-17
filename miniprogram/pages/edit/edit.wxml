@@ -1,11 +1,8 @@
 <view class="edit-box">
 
-  <!-- <button bind:tap="showTarget">+</button> -->
-  <button open-type="getUserInfo" bindgetuserinfo="showTarget">+</button>
-
   <view>你有{{targetList.length}}个累计目标</view>
-  <view wx:for="{{targetList}}">
-    <view class="already-target">
+  <view wx:for="{{targetList}}" wx:key="index">
+    <view class="already-target" bind:tap="gotoEditDetail" data-edit="{{item}}">
       <view>{{item.title}}</view>
       <view wx:if="{{!item.lastUpdate}}">
         <van-tag color="#cccccc">累计:未开始</van-tag>
@@ -17,10 +14,11 @@
     </view>
   </view>
 
+  <!-- 创建按钮 -->
+  <image src="../../images/add-target.png" class="create-target" bind:tap="showTarget"></image>
 
 
-  <van-dialog id="van-dialog" width="700rpx" use-slot show-cancel-button show="{{ showAddTarget }}" bind:confirm="addTarget" title="新的目标">
-    <input class="add-target" placeholder="列如： 学习" value="{{createTitle}}" bind:input="changeCreateTitle" />
-  </van-dialog>
-  <van-notify id="van-notify" />
 </view>
+<target-dialog title="新的目标" placeholder="请输入目标" wx:if="{{showAddTarget}}" bind:addTarget="addTarget" bind:closeDialog="closeDialog"></target-dialog>
+
+<van-notify id="van-notify" />

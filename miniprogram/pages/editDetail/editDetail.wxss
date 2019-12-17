@@ -1,0 +1,62 @@
+/* miniprogram/pages/editDetail/editDetail.wxss */
+.edit-detail{
+  padding: 20rpx;
+}
+.edit-title{
+  margin-left: 20rpx;
+}
+.edit-delete{
+  float: right;
+}
+.edit-overview{
+  color: #91bef0;
+  margin: 20rpx 0;
+}
+.edit-box{
+  display: flex;
+  justify-content: space-between;
+}
+.edit-item{
+  flex: 0.3;
+  padding: 12rpx;
+  border-radius: 20rpx;
+}
+.item-title{
+  font-size: 32rpx;
+}
+.item-value{
+  padding-top: 10rpx;
+  color: #999;
+  font-size: 24rpx;
+}
+.target-record{
+  padding: 40rpx 0 10rpx 0;
+  color: #91bef0;
+  border-bottom: 1rpx solid #efefef;
+}
+
+.record-icon{
+  position: fixed;
+  right: 4%;
+  bottom: 4%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100rpx;
+  height: 100rpx;
+  background: #91bef0;
+  border-radius: 50%;
+}
+.record{
+  height: 50rpx;
+}
+
+.lightblue{
+  background: #e1ffff;
+}
+.lmblue{
+  background: #fff4b9;
+}
+.lightgreen{
+  background: #ddfdb9;
+}

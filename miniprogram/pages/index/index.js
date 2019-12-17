@@ -1,7 +1,6 @@
 //index.js
 const app = getApp()
 const bmap = require('../../utils/bmap-wx.min.js');
-import Dialog from '@vant/weapp/dialog/dialog';
 // 今日天气类
 class TodayWeather {
   constructor(city, temp, weather, pm25, pm25Level, wind) {
@@ -126,20 +125,6 @@ Page({
     })
     this.getWeather()
   },
-  // 下拉刷新
-  onPullDownRefresh() {
-    this.getRunData();
-    this.getWeather()
-    console.log(1);
-    setTimeout(function () {
-      // 不加这个方法真机下拉会一直处于刷新状态，无法复位
-      wx.stopPullDownRefresh()
-      wx.pageScrollTo({
-        scrollTop: 0,
-      })
-      console.log(2);
-    }, 2000)
-  },
   goToLife(e) {
     let lifeValue = JSON.stringify(e.currentTarget.dataset.life);
     wx.navigateTo({
@@ -178,7 +163,17 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-
+    console.log(1);
+    this.getRunData();
+    this.getWeather()
+    setTimeout(function () {
+      // 不加这个方法真机下拉会一直处于刷新状态，无法复位
+      wx.stopPullDownRefresh()
+      // wx.pageScrollTo({
+      //   scrollTop: 0,
+      // })
+      console.log(2);
+    }, 2000)
   },
 
   /**

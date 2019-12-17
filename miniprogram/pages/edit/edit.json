@@ -2,7 +2,9 @@
   "usingComponents": {
     "van-dialog": "@vant/weapp/dialog",
     "van-notify": "@vant/weapp/notify",
-    "van-tag": "@vant/weapp/tag"
+    "van-tag": "@vant/weapp/tag",
+    "van-icon": "@vant/weapp/icon",
+    "target-dialog": "../../Components/targetDialog/targetDialog"
   },
   "navigationBarTitleText": "目标"
 }
