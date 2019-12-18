@@ -1,2 +1,11 @@
 <!--miniprogram/pages/editTimer/editTimer.wxml-->
-<text>miniprogram/pages/editTimer/editTimer.wxml</text>
+<view class="edit-timer">
+  <view class="title">{{editTitle}}</view>
+  <view class="state">进行中</view>
+  <view class="timer">{{timer}}</view>
+  <timer-loaders isPlay="{{isPlay}}" bind:changePlay="changePlay"></timer-loaders>
+  <view class="save">
+    <van-button icon="sign" color="#91bef0">结束并保存</van-button>
+  </view>
+  <view class="cancel" bind:tap="cancelPlay">取消</view>
+</view>

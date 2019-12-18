@@ -1,1 +1,37 @@
 /* miniprogram/pages/editTimer/editTimer.wxss */
+
+.edit-timer {
+  padding: 20rpx;
+}
+
+.timer {
+  font-family: 'Digital-7 Mono';
+}
+
+.title {
+  font-size: 42rpx;
+  font-weight: 550;
+}
+
+.state {
+  margin-top: 22rpx;
+  color: #91bef0;
+}
+
+.timer {
+  margin: 60rpx 0;
+  text-align: center;
+  font-size: 80rpx;
+  color: #91bef0;
+}
+
+.save {
+  margin-top: 100rpx;
+  text-align: center;
+}
+
+.cancel {
+  margin-top: 30rpx;
+  text-align: center;
+  color: #999;
+}

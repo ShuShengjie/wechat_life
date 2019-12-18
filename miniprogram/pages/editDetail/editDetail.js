@@ -3,6 +3,8 @@ import TimeUtils from '../../utils/timeUtils.js';
 import Notify from '@vant/weapp/notify/notify';
 import Toast from '@vant/weapp/toast/toast';
 
+const app = getApp();
+
 Page({
 
   /**
@@ -65,6 +67,16 @@ Page({
   },
   // 进入计时页
   goToTimer(e) {
+    const { id, title } = e.currentTarget.dataset;
+    const globalData = app.globalData;
+    if (globalData.targetId !== '' && globalData.targetId !== id) {
+      Toast({
+        message: '目前已有目标正在进行中',
+        selector: '#editDetail-toast',
+        context: this
+      });
+      return
+    }
     wx.navigateTo({
       url: `/pages/editTimer/editTimer?id=${id}&title=${title}`,
     })

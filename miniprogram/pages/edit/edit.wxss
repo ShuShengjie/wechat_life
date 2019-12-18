@@ -25,3 +25,26 @@
   background: #91bef0;
   border-radius: 50%;
 }
+.going-edit{
+  margin: 3%;
+  padding: 30rpx 20rpx;
+  background: #ffe500;
+  border-radius: 30rpx;
+  box-sizing: border-box;
+}
+.going-title{
+  display: flex;
+  justify-content: space-between;
+  font-size: 28rpx;
+}
+.going-jump{
+  padding: 10rpx;
+  color: #91bef0;
+  background: #fff;
+  border-radius: 24rpx;
+  font-size: 22rpx;
+}
+.going-timer{
+  font-size: 40rpx;
+  font-family: 'Digital-7 Mono';
+}

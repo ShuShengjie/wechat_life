@@ -1,3 +1,6 @@
 {
-  "usingComponents": {}
+  "usingComponents": {
+    "timer-loaders": "../../Components/timerLoaders/timerLoaders",
+    "van-button": "@vant/weapp/button"
+  }
 }

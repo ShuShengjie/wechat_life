@@ -29,8 +29,6 @@
   <week-temp class="week-temp" weatherData="{{weatherClass.weatherData}}"></week-temp>
 
   <view class="demo">
-    <!-- <button bindtap="getCurrentPos">获取最近三天天气</button>
-    <button bindtap="getRunData">获取近31天步数</button> -->
     <!-- <today-run oData="{{runCount}}" class="mychart-runProcess"></today-run> -->
   </view>
 </view>

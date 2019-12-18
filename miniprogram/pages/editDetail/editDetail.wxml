@@ -31,10 +31,12 @@
 
 
 
-  <view class="record-icon" data-id="{{}}" data-title="{{}}" bind:tap="goToTimer">
+  <view class="record-icon" data-id="{{editDetails._id}}" data-title="{{editTitle}}" bind:tap="goToTimer">
     <van-icon class="record" size="70rpx" color="#fff" name="records" />
   </view>
 </view>
 
 
 <target-dialog title="修改目标" placeholder="{{editDetails.title}}" wx:if="{{showAddTarget}}" bind:addTarget="addTarget" bind:closeDialog="closeDialog"></target-dialog>
+
+<van-toast id="editDetail-toast" />

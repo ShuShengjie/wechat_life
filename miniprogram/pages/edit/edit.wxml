@@ -1,5 +1,13 @@
 <view class="edit-box">
 
+  <!-- 正在进行中的目标 -->
+  <view class="going-edit" wx-if="{{targetId}}">
+    <view class="going-title">当前{{goingEdit}}进行中： {{stateDesc}} 
+      <text class="going-jump" bind:tap="showThisEdit">查看</text>
+    </view>
+    <view class="going-timer">{{timer}}</view>
+  </view>
+
   <view>你有{{targetList.length}}个累计目标</view>
   <view wx:for="{{targetList}}" wx:key="index">
     <view class="already-target" bind:tap="gotoEditDetail" data-edit="{{item}}">

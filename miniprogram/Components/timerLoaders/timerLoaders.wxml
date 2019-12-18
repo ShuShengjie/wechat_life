@@ -1,0 +1,8 @@
+
+<view class="timer-loaders">
+  <view class="loader-box">
+    <view class="loader">
+    <image src="/images/{{iconImage}}.png" class="loader-state" bind:tap="changeState"></image>
+    </view>
+  </view>
+</view>

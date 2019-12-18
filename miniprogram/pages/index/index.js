@@ -57,7 +57,7 @@ Page({
     switch(true) {
       case num <= 35:
         level = '优'
-        bgColor = 'grren';
+        bgColor = 'green';
         break;
       case num <= 75:
         level = '良'

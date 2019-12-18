@@ -18,4 +18,16 @@ export default class TimeUtils {
     const day = Dates.getDate() < 10 ? '0' + Dates.getDate() : Dates.getDate();
     return year + split + month + split + day
   }
+  // 秒表计时
+  static formatDurationToTimer(millisec) {
+    const duration = +millisec / 1000;
+    const second = this.padZero(Math.floor(duration % 60));
+    const minute = this.padZero(Math.floor(duration /60) % 60);
+    const hour = this.padZero(Math.floor(duration / 60 / 60) % 60);
+    return `${hour}:${minute}:${second}`;
+  }
+  // 10以内的补0
+  static padZero(number) {
+    return +number < 10 ? '0' + number.toString() : number.toString()
+  }
 }

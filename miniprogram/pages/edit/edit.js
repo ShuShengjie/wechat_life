@@ -1,9 +1,11 @@
 // miniprogram/pages/edit/edit.js
 import Notify from '@vant/weapp/notify/notify';
 import Toast from '@vant/weapp/toast/toast';
+import TimeUtils from '../../utils/timeUtils';
+import { TimerState } from '../../config/timerState.js';
 
 
-const globalEnv = getApp()
+const app = getApp()
 Page({
 
   /**
@@ -13,7 +15,51 @@ Page({
     // 新增目标弹窗
     showAddTarget: false,
     // 目标列表
-    targetList: []
+    targetList: [],
+    // 当前进行的目标
+    goingEdit: '',
+    targetId: '',
+    // 当前进行的目标计时
+    timer: '00:00:00',
+    stateDesc: ''
+  },
+  // 标签信息跳转
+  showThisEdit() {
+    wx.navigateTo({
+      url: `/pages/editTimer/editTimer?id=${this.data.targetId}&title=${this.data.goingEdit}`,
+    })
+  },
+  // 获取标签信息
+  getTimerTips() {
+    const globalData = app.globalData;
+    let stateDesc = '';
+    switch (globalData.timerState) {
+      case TimerState.NONE:
+        stateDesc = '';
+        break
+      case TimerState.PAUSE:
+        stateDesc = '暂停中';
+        this.setData({
+          timer: TimeUtils.formatDurationToTimer(globalData.duration)
+        })
+        break
+      case TimerState.PLAY:
+        stateDesc = '进行中';
+        this.setData({
+          timer: TimeUtils.formatDurationToTimer(globalData.duration)
+        })
+        app.startTimer(null, null, duration => {
+          this.setData({
+            timer: TimeUtils.formatDurationToTimer(duration)
+          })
+        })
+        break
+    }
+    this.setData({
+      stateDesc,
+      goingEdit: globalData.targetTitle,
+      targetId: globalData.targetId
+    })
   },
   // 查看是否登录，登录则弹出新增弹窗
   showTarget() {
@@ -98,6 +144,7 @@ Page({
     } else {
       this.getTargetList();
     }
+    this.getTimerTips();
   },
 
   /**
