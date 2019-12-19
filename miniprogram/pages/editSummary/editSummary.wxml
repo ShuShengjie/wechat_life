@@ -1,0 +1,29 @@
+<!--miniprogram/pages/editSummary/editSummary.wxml-->
+<view class="edit-summary">
+  <view class="summary-box">
+    <view>{{title}}</view>
+    <view class="state">本次记录统计</view>
+    <!-- 起始结束时间 -->
+    <view class="timer-box">
+      <view class="begin">
+        <view class="time">{{beginTime}}</view>
+        <view class="date">{{beginDate}}</view>
+        <view class="state">开始时间</view>
+      </view>
+      <view>
+        <view class="duration-time">{{duration}}</view>
+        <view class="line"></view>
+      </view>
+      <view class="end">
+        <view class="time">{{endTime}}</view>
+        <view class="date">{{endDate}}</view>
+        <view class="state">结束时间</view>
+      </view>
+    </view>
+    <view class="state">有什么要总结的吗？</view>
+    <textarea class="textarea" placeholder="本次目标总结" bind:input="changeConclusion"></textarea>
+    <view class="save">
+      <van-button color="#91bef0" bind:tap="saveThisEdit" bind:tap="saveEdit">保存</van-button>
+    </view>
+  </view>
+</view>

@@ -1,8 +1,10 @@
 <view class="edit-box">
 
+  <week-time></week-time>
+
   <!-- 正在进行中的目标 -->
   <view class="going-edit" wx-if="{{targetId}}">
-    <view class="going-title">当前{{goingEdit}}进行中： {{stateDesc}} 
+    <view class="going-title">当前{{goingEdit}} {{stateDesc}} 
       <text class="going-jump" bind:tap="showThisEdit">查看</text>
     </view>
     <view class="going-timer">{{timer}}</view>

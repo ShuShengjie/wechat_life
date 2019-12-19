@@ -95,6 +95,22 @@ Page({
       }
     })
   },
+
+  // 保存此次记录
+  saveThisEdit() {
+    const globalData = app.globalData;
+    const {editId, editTitle} = this.data;
+    const details = {};
+    details.id = editId;
+    details.title = editTitle;
+    details.beginTime = globalData.beginTime;
+    details.endTime = Date.now();
+    details.duration = globalData.duration;
+    app.cancelTimer();
+    wx.navigateTo({
+      url: `/pages/editSummary/editSummary?details=${JSON.stringify(details)}`,
+    })
+  },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */

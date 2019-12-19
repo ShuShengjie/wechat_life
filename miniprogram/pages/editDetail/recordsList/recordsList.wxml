@@ -1,0 +1,9 @@
+<!--pages/editDetail/recordsList/recordsList.wxml-->
+<text>pages/editDetail/recordsList/recordsList.wxml</text>
+<view wx:for="{{recordsList}}">
+  <view>{{item.conclusion}}</view>
+  <view>{{item.beginDate}}</view>
+  <view>{{item.endDate}}</view>
+  <view>{{item.duration.pref}}</view>
+  <view>{{item.duration.suff}}</view>
+</view>

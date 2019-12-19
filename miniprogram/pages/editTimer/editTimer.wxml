@@ -5,7 +5,7 @@
   <view class="timer">{{timer}}</view>
   <timer-loaders isPlay="{{isPlay}}" bind:changePlay="changePlay"></timer-loaders>
   <view class="save">
-    <van-button icon="sign" color="#91bef0">结束并保存</van-button>
+    <van-button icon="sign" color="#91bef0" bind:tap="saveThisEdit">结束并保存</van-button>
   </view>
   <view class="cancel" bind:tap="cancelPlay">取消</view>
 </view>

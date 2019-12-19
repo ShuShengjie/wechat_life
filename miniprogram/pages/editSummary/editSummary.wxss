@@ -1,0 +1,98 @@
+/* miniprogram/pages/editSummary/editSummary.wxss */
+
+.state {
+  margin-top: 22rpx;
+  color: #91bef0;
+}
+
+.edit-summary {
+  height: 100vh;
+  background: #efefef;
+}
+
+.summary-box {
+  padding: 20rpx;
+}
+
+.timer-box {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 40rpx;
+  padding: 24rpx;
+  border-radius: 18rpx;
+  background: #fff;
+  box-shadow: 0 6rpx 24rpx rgba(25, 118, 210, 0.08);
+}
+
+.timer-box > view {
+  text-align: center;
+}
+
+.timer-box > .begin {
+  text-align: left;
+}
+
+.timer-box > .end {
+  text-align: right;
+}
+
+.timer-box .time {
+  font-size: 40rpx;
+}
+
+.timer-box .date {
+  font-size: 30rpx;
+}
+
+.timer-box .state {
+  color: #999;
+  font-size: 24rpx;
+}
+
+.duration-time {
+  margin-top: 20rpx;
+}
+
+.line {
+  position: relative;
+  width: 150rpx;
+  height: 8rpx;
+  margin-top: 30rpx;
+  background: #bbdefb;
+  border-radius: 8rpx;
+}
+
+.line::before {
+  position: absolute;
+  top: -6rpx;
+  left: 0;
+  width: 20rpx;
+  height: 20rpx;
+  border-radius: 50%;
+  background-color: #64b5f6;
+  content: '';
+}
+
+.line::after {
+  position: absolute;
+  top: -6rpx;
+  right: 0;
+  width: 20rpx;
+  height: 20rpx;
+  border-radius: 50%;
+  background-color: #64b5f6;
+  content: '';
+}
+
+.textarea {
+  width: 100%;
+  margin: 30rpx 0;
+  padding: 20rpx;
+  color: #999;
+  background: #fff;
+  border: 4rpx solid #f8f8f8;
+  box-sizing: border-box;
+}
+.save{
+  text-align: center;
+}

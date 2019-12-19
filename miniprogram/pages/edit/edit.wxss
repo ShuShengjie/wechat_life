@@ -1,12 +1,13 @@
 /* miniprogram/pages/edit/edit.wxss */
 .edit-box{
   background: #ffffff;
+  padding: 20rpx;
 }
 .add-target{
   margin: 40rpx;
 }
 .already-target{
-  margin: 3%;
+  margin: 3% 0;
   padding: 30rpx 20rpx;
   background: #fff;
   border-radius: 30rpx;
@@ -26,7 +27,7 @@
   border-radius: 50%;
 }
 .going-edit{
-  margin: 3%;
+  margin: 3% 0;
   padding: 30rpx 20rpx;
   background: #ffe500;
   border-radius: 30rpx;

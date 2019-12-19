@@ -14,6 +14,10 @@ exports.main = async (event, context) => {
     await db.collection('create_target')
     .where({_id: targetId})
     .remove();
+
+    await db.collection('target_records')
+    .where({targetId})
+    .remove();
   } catch(err) {
     console.log(err);
   }

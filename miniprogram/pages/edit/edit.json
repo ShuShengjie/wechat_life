@@ -4,7 +4,8 @@
     "van-notify": "@vant/weapp/notify",
     "van-tag": "@vant/weapp/tag",
     "van-icon": "@vant/weapp/icon",
-    "target-dialog": "../../Components/targetDialog/targetDialog"
+    "target-dialog": "../../Components/targetDialog/targetDialog",
+    "week-time": "./weekTime/weekTime"
   },
   "navigationBarTitleText": "目标"
 }

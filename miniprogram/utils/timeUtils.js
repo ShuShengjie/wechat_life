@@ -1,6 +1,6 @@
 export default class TimeUtils {
   // 获取年月日时分秒
-  static formatDate(time) {
+  static formatFullDate(time) {
     const Dates = new Date(time);
     const year = Dates.getFullYear();
     const month = (Dates.getMonth() + 1) < 10 ? '0' + (Dates.getMonth() + 1) : Dates.getMonth() + 1;
@@ -11,20 +11,60 @@ export default class TimeUtils {
     return year + '-' + month + '-' + day + ' ' + hour + ':' + minute + ':' + second;
   }
   // 获取年月日
-  static formatDay(time, split = '-') {
+  static formatDay(time, needYear = true, split = '-') {
     const Dates = new Date(time);
     const year = Dates.getFullYear();
     const month = (Dates.getMonth() + 1) < 10 ? '0' + (Dates.getMonth() + 1) : Dates.getMonth() + 1;
     const day = Dates.getDate() < 10 ? '0' + Dates.getDate() : Dates.getDate();
-    return year + split + month + split + day
+    return needYear ? (year + split + month + split + day) : (month + split + day)
   }
-  // 秒表计时
+  // 获取时分秒
+  static formatDate(time, needSecond = true, split = ':') {
+    const Dates = new Date(time);
+    const hour = this.padZero(Dates.getHours());
+    const minute = this.padZero(Dates.getMinutes());
+    const second = this.padZero(Dates.getSeconds());
+    return needSecond ? (hour + split + minute + split + second) : (hour + split + minute)
+  }
+  // 秒表计时 
   static formatDurationToTimer(millisec) {
     const duration = +millisec / 1000;
     const second = this.padZero(Math.floor(duration % 60));
-    const minute = this.padZero(Math.floor(duration /60) % 60);
+    const minute = this.padZero(Math.floor(duration / 60) % 60);
     const hour = this.padZero(Math.floor(duration / 60 / 60) % 60);
     return `${hour}:${minute}:${second}`;
+  }
+  // 时间戳转化时间
+  static formatDuration(millisec) {
+    const duration = +millisec / 1000;
+    let pref = '';
+    let suff = '';
+    if (duration <= 0) {
+      suff = '未开始'
+    } else if (duration <= 1) {
+      suff = '1秒不够'
+    } else if (duration < 60) {
+      pref = parseInt(duration)
+      suff = '秒'
+    } else if (duration / 60 < 60) {
+      pref = parseInt(duration / 60)
+      suff = '分钟'
+    } else if (duration / 3600 < 24) {
+      pref = parseInt(duration / 3600)
+      suff = '小时'
+    } else {
+      pref = parseInt(duration / 86400)
+      suff = '天'
+    }
+    return {
+      pref,
+      suff
+    }
+  }
+  // 时间戳转化为标准计时
+  static formatDurationToStr(millisec) {
+    const data = this.formatDuration(+millisec)
+    return data.pref + data.suff
   }
   // 10以内的补0
   static padZero(number) {

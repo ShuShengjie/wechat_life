@@ -14,7 +14,9 @@ Page({
     editDetails: {},
     showAddTarget: false,
     // 目标标题
-    editTitle: ''
+    editTitle: '',
+    // 目标记录list
+    recordsList: []
   },
   // 修改目标名称
   editTargetTitle() {
@@ -81,6 +83,37 @@ Page({
       url: `/pages/editTimer/editTimer?id=${id}&title=${title}`,
     })
   },
+  getEditRecords(targetId) {
+    wx.cloud.callFunction({
+      name: 'getTargetRecords',
+      data: {
+        targetId
+      },
+      success: res => {
+        let records = res.result.data[0].records;
+        let recordsList = [];
+        console.log(records, '0000000000')
+        for (let i = 0; i < records.length; i++) {
+          console.log(records[i].conclusion, '11111111111');
+          recordsList[i].conclusion = records[i].conclusion;
+          recordsList[i].beginDate = TimeUtils.formatFullDate(records[i].beginDate);
+          recordsList[i].endDate = TimeUtils.formatFullDate(records[i].endDate);
+          recordsList[i].duration = TimeUtils.formatDuration(records[i].duration);
+        }
+        // records.forEach((record, index) => {
+        //   console.log(record, index, '11111111111');
+        //   recordsList[index].conclusion = record.conclusion;
+        //   recordsList[index].beginDate = TimeUtils.formatFullDate(record.beginDate);
+        //   recordsList[index].endDate = TimeUtils.formatFullDate(record.endDate);
+        //   recordsList[index].duration = TimeUtils.formatDuration(record.duration);
+        // })
+        // console.log(recordsList, '22222222222')
+        this.setData({
+          recordsList
+        })
+      }
+    })
+  },
   /**
    * 生命周期函数--监听页面加载
    */
@@ -91,54 +124,6 @@ Page({
       editDetails,
       editTitle: editDetails.title
     })
+    this.getEditRecords(editDetails._id);
   },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
-  }
 })

@@ -101,10 +101,14 @@ Page({
         userId: wx.getStorageSync('openid')
       },
       complete: res => {
-        this.setData({
-          targetList: res.result.data
+        let targetList = res.result.data;
+        res.result.data.forEach((data, index) => {
+          targetList[index].time = TimeUtils.formatDurationToStr(data.time)
+          targetList[index].lastUpdate = TimeUtils.formatFullDate(data.lastUpdate)
         })
-        console.log(this.data.targetList)
+        this.setData({
+          targetList: targetList
+        })
       }
     })
   },
@@ -121,13 +125,6 @@ Page({
   onLoad: function (options) {
     // this.getTargetList();
   },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-  },
-
   /**
    * 生命周期函数--监听页面显示
    */
@@ -146,40 +143,4 @@ Page({
     }
     this.getTimerTips();
   },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-
-  // 下拉刷新
-  onPullDownRefresh() {
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
-  }
 })

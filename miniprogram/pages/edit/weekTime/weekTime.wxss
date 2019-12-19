@@ -1,0 +1,13 @@
+/* pages/index/weekTemp/weekTemp.wxss */
+
+.week-time {
+  width: 100%;
+  height: 600rpx;
+}
+
+.ecahrts-box {
+  width: 100%;
+  height: 100%;
+}
+
+

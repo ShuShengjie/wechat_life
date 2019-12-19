@@ -1,0 +1,4 @@
+<!--pages/edit/weekTime/weekTime.wxml-->
+<view class="week-time">
+  <ec-canvas id="weekTime" canvas-id="mychart-weekTemp" ec="{{ ec }}"></ec-canvas>
+</view>

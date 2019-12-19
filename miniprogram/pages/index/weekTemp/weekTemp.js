@@ -15,7 +15,6 @@ Component({
   },
   lifetimes: {
     ready() {
-      console.log(this.data.weatherData, 'weatherData');
       // 天气情况数组
       const dayWeatherList = [];
       const nightWeatherList = []; 

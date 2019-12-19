@@ -2,6 +2,7 @@
   "usingComponents": {
     "van-icon": "@vant/weapp/icon",
     "van-toast": "@vant/weapp/toast",
-    "target-dialog": "../../Components/targetDialog/targetDialog"
+    "target-dialog": "../../Components/targetDialog/targetDialog",
+    "records-list": "./recordsList/recordsList"
   }
 }
