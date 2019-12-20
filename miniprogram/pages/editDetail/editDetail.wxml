@@ -26,14 +26,14 @@
       <view class="item-value">{{editDetails.lastUpdate || '未开始'}}</view>
     </view>
   </view>
-
   <view class="target-record">目标记录</view>
-  <records-list wx:if="{{recordsList.length}}" recordsList="{{recordsList}}"></records-list>
-  <view wx:else class="no-records">
+  <records-list wx-if="{{recordsList.length}}" recordsList="{{recordsList}}"></records-list>
+  <view wx:elif="{{recordsList.length === 0 && loading}}" class="no-records">
     <image src="../../images/arrow.png"></image>
     <view class="prompt">暂时没有记录</view>
     <view class="prompt">点击右下角按钮开始记录哦</view>
   </view>
+  <w-loading wx:else></w-loading>
 
 
   <view class="record-icon" data-id="{{editDetails._id}}" data-title="{{editTitle}}" bind:tap="goToTimer">

@@ -3,6 +3,7 @@
     "van-icon": "@vant/weapp/icon",
     "van-toast": "@vant/weapp/toast",
     "target-dialog": "../../Components/targetDialog/targetDialog",
-    "records-list": "./recordsList/recordsList"
+    "records-list": "./recordsList/recordsList",
+    "w-loading": "../../Components/loading/loading"
   }
 }

@@ -2,6 +2,7 @@
 import Notify from '@vant/weapp/notify/notify';
 import Toast from '@vant/weapp/toast/toast';
 import TimeUtils from '../../utils/timeUtils';
+import Utils from '../../utils/utils.js';
 import { TimerState } from '../../config/timerState.js';
 
 
@@ -21,7 +22,11 @@ Page({
     targetId: '',
     // 当前进行的目标计时
     timer: '00:00:00',
-    stateDesc: ''
+    stateDesc: '',
+    // 图表所需数据
+    echartList: [],
+    echartsTotal: '',
+    showEcharts: false
   },
   // 标签信息跳转
   showThisEdit() {
@@ -95,19 +100,34 @@ Page({
   },
   // 获取所有目标
   getTargetList() {
+    const firstDay = TimeUtils.getFirstdayDateZeroTime(Date.now());
     wx.cloud.callFunction({
       name: 'getTargetList',
       data: {
-        userId: wx.getStorageSync('openid')
+        userId: wx.getStorageSync('openid'),
+        firstDay
       },
       complete: res => {
-        let targetList = res.result.data;
+        let echartList = [];
+        let echartsTotal = 0;
+        this.data.showEcharts = false;
+        // 使用了深拷贝，返回的对象是对象数组
+        let targetList = Utils.deepClone(res.result.data);
+        echartList = new Array(targetList.length);
         res.result.data.forEach((data, index) => {
+          echartsTotal += data.time;
           targetList[index].time = TimeUtils.formatDurationToStr(data.time)
           targetList[index].lastUpdate = TimeUtils.formatFullDate(data.lastUpdate)
+          echartList[index] = {};
+          echartList[index].name = data.title
+          echartList[index].value = data.time
+          echartList[index].time = TimeUtils.formatDurationToStr(data.time)
         })
         this.setData({
-          targetList: targetList
+          targetList,
+          echartList,
+          echartsTotal: TimeUtils.formatDurationToStr(echartsTotal),
+          showEcharts: true
         })
       }
     })
@@ -133,7 +153,6 @@ Page({
       wx.cloud.callFunction({
         name: 'login',
         success: res => {
-          console.log(res);
           wx.setStorageSync('openid', res.result.openid)
           this.getTargetList();
         }

@@ -31,8 +31,9 @@ Page({
         conclusion: conclusion ? conclusion : '未命名'
       },
       complete: res => {
-        wx.navigateBack({
-          delta: 2
+        app.cancelTimer();
+        wx.switchTab({
+          url: '/pages/edit/edit',
         })
       }
     })

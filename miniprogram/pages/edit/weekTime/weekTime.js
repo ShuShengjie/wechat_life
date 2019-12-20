@@ -1,6 +1,6 @@
 // pages/edit/weekTime/weekTime.js
 import * as echarts from '../../../ec-canvas/echarts';
-import weekTimeOption from './weekTimeOption.js';
+import WeekTimeOption from './weekTimeOption.js';
 let chart = null;
 
 Component({
@@ -8,7 +8,14 @@ Component({
    * 组件的属性列表
    */
   properties: {
-
+    echartList: {
+      type: Array,
+      value: [],
+    },
+    echartsTotal: {
+      type: String,
+      value: '',
+    }
   },
 
   lifetimes: {
@@ -31,6 +38,7 @@ Component({
    */
   data: {
     ec: {},
+    weekTimeOption: new WeekTimeOption()
   },
 
   /**
@@ -38,7 +46,11 @@ Component({
    */
   methods: {
     updateOption() {
-      const option = weekTimeOption;
+      this.weekTimeOption = new WeekTimeOption();
+      this.weekTimeOption.total = this.data.echartsTotal;
+      this.weekTimeOption.dataList = this.data.echartList;
+      console.log(this.data.echartList)
+      const option = this.weekTimeOption.getOption;
       this.chart.setOption(option);
     },
   }

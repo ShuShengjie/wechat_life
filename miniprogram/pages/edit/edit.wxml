@@ -1,6 +1,6 @@
 <view class="edit-box">
 
-  <week-time></week-time>
+  <week-time wx:if="{{showEcharts}}" echartsTotal="{{echartsTotal}}" echartList="{{echartList}}"></week-time>
 
   <!-- 正在进行中的目标 -->
   <view class="going-edit" wx-if="{{targetId}}">
@@ -10,11 +10,11 @@
     <view class="going-timer">{{timer}}</view>
   </view>
 
-  <view>你有{{targetList.length}}个累计目标</view>
+  <view>本周你有{{targetList.length}}个累计目标</view>
   <view wx:for="{{targetList}}" wx:key="index">
     <view class="already-target" bind:tap="gotoEditDetail" data-edit="{{item}}">
       <view>{{item.title}}</view>
-      <view wx:if="{{!item.lastUpdate}}">
+      <view wx:if="{{item.time === '未开始'}}">
         <van-tag color="#cccccc">累计:未开始</van-tag>
       </view>
       <view wx:else>

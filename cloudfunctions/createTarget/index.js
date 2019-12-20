@@ -18,7 +18,7 @@ exports.main = async (event, context) => {
       data: {
         userId,
         title: targetTitle,
-        createDate: new Date(),
+        createDate: new Date().getTime(),
         lastUpdate: null,
         time: 0
       }

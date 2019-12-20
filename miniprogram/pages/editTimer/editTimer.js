@@ -106,7 +106,7 @@ Page({
     details.beginTime = globalData.beginTime;
     details.endTime = Date.now();
     details.duration = globalData.duration;
-    app.cancelTimer();
+    // app.cancelTimer();
     wx.navigateTo({
       url: `/pages/editSummary/editSummary?details=${JSON.stringify(details)}`,
     })

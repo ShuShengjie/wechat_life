@@ -1,1 +1,13 @@
-/* pages/editDetail/recordsList/recordsList.wxss */
+
+.list-box{
+  display: flex;
+  justify-content: space-between;
+  padding: 10rpx 10rpx 20rpx 10rpx;
+  border-bottom: 2rpx solid #efefef;
+}
+.list-box .timer {
+  color: #91bef0;
+}
+.list-box .list-right{
+  text-align: center;
+}

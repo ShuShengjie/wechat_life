@@ -1,9 +1,15 @@
 <!--pages/editDetail/recordsList/recordsList.wxml-->
-<text>pages/editDetail/recordsList/recordsList.wxml</text>
-<view wx:for="{{recordsList}}">
-  <view>{{item.conclusion}}</view>
-  <view>{{item.beginDate}}</view>
-  <view>{{item.endDate}}</view>
-  <view>{{item.duration.pref}}</view>
-  <view>{{item.duration.suff}}</view>
+<view>
+  <block>
+    <view wx:for="{{recordsList}}" class="list-box">
+      <view>
+        <view class="title">{{item.conclusion}}</view>
+        <van-tag color="#cccccc">{{item.beginDate}} ~ {{item.endDate}}</van-tag>
+      </view>
+      <view class="list-right">
+        <view class="timer">{{item.duration.pref}}</view>
+        <view>{{item.duration.suff}}</view>
+      </view>
+    </view>
+  </block>
 </view>

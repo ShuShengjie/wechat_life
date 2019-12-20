@@ -16,7 +16,10 @@ Page({
     // 目标标题
     editTitle: '',
     // 目标记录list
-    recordsList: []
+    recordsList: [],
+    eid: '',
+    // 请求是否完毕
+    loading: false
   },
   // 修改目标名称
   editTargetTitle() {
@@ -89,27 +92,32 @@ Page({
       data: {
         targetId
       },
-      success: res => {
+      success: async res => {
         let records = res.result.data[0].records;
-        let recordsList = [];
-        console.log(records, '0000000000')
-        for (let i = 0; i < records.length; i++) {
-          console.log(records[i].conclusion, '11111111111');
-          recordsList[i].conclusion = records[i].conclusion;
-          recordsList[i].beginDate = TimeUtils.formatFullDate(records[i].beginDate);
-          recordsList[i].endDate = TimeUtils.formatFullDate(records[i].endDate);
-          recordsList[i].duration = TimeUtils.formatDuration(records[i].duration);
+        if (records) {
+          let recordsList = [];
+          console.log(11)
+          recordsList = new Array(records.length);
+          // recordsList = new Array(records.length).fill({})
+          // recordsList = [{}, {}];
+          console.log(recordsList, '0000000000')
+          await records.forEach((record, index) => {
+            console.log(record, index, '11111111111');
+            recordsList[index] = {};
+            recordsList[index].conclusion = record.conclusion;
+            recordsList[index].beginDate = TimeUtils.formatFullDate(record.beginDate);
+            recordsList[index].endDate = TimeUtils.formatFullDate(record.endDate);
+            recordsList[index].duration = TimeUtils.formatDuration(record.duration);
+            console.log(recordsList, ' recordsList[index],')
+          })
+          console.log(recordsList, '22222222222')
+          this.setData({
+            recordsList
+          })
+          
         }
-        // records.forEach((record, index) => {
-        //   console.log(record, index, '11111111111');
-        //   recordsList[index].conclusion = record.conclusion;
-        //   recordsList[index].beginDate = TimeUtils.formatFullDate(record.beginDate);
-        //   recordsList[index].endDate = TimeUtils.formatFullDate(record.endDate);
-        //   recordsList[index].duration = TimeUtils.formatDuration(record.duration);
-        // })
-        // console.log(recordsList, '22222222222')
         this.setData({
-          recordsList
+          loading: true
         })
       }
     })
@@ -120,10 +128,15 @@ Page({
   onLoad: function (options) {
     let editDetails = JSON.parse(options.edit);
     editDetails.createDate = TimeUtils.formatDay(editDetails.createDate);
+    this.data.eid = editDetails._id
     this.setData({
       editDetails,
       editTitle: editDetails.title
     })
-    this.getEditRecords(editDetails._id);
+    // this.getEditRecords(this.data.eid);
   },
+  onShow() {
+    console.log(this.data.eid)
+    this.getEditRecords(this.data.eid);
+  }
 })

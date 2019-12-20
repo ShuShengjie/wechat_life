@@ -1,4 +1,6 @@
 export default class TimeUtils {
+  // 一天的毫秒数
+  static ONE_DAY_LONG = 24 * 60 * 60 * 1000;
   // 获取年月日时分秒
   static formatFullDate(time) {
     const Dates = new Date(time);
@@ -34,7 +36,7 @@ export default class TimeUtils {
     const hour = this.padZero(Math.floor(duration / 60 / 60) % 60);
     return `${hour}:${minute}:${second}`;
   }
-  // 时间戳转化时间
+  // 时间戳转化计算时间时间
   static formatDuration(millisec) {
     const duration = +millisec / 1000;
     let pref = '';
@@ -65,6 +67,26 @@ export default class TimeUtils {
   static formatDurationToStr(millisec) {
     const data = this.formatDuration(+millisec)
     return data.pref + data.suff
+  }
+  // 转换为时间戳
+  static formatTimeStamp(date) {
+    if (date == null) {
+      return 0;
+    }
+    return date.getTime();
+  }
+  // 返回本周周一零点的时间戳
+  static getFirstdayDateZeroTime(date) {
+    const Dates = new Date(date);
+    const millisec = Dates.getTime();
+    const day = Dates.getDay() || 7;
+    const time = millisec - (day - 1) * this.ONE_DAY_LONG;
+    const result = this.getDateZeroTime(time)
+    return result
+  }
+  // 返回当天零点的时间戳
+  static getDateZeroTime(date) {
+    return this.formatTimeStamp(new Date(new Date(date).toLocaleDateString()));
   }
   // 10以内的补0
   static padZero(number) {

@@ -1,0 +1,8 @@
+<!--Components/loading/loading.wxml-->
+<view class="loading">
+    <text></text>
+    <text></text>
+    <text></text>
+    <text></text>
+    <text></text>
+</view>
