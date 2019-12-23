@@ -8,7 +8,7 @@ Page({
    */
   data: {
     userInfo: wx.getStorageSync('userInfo') || {},
-    popupShow: false
+    // userInfo: {}
   },
 
   /**
@@ -32,17 +32,24 @@ Page({
   },
   // 获取登陆信息
   getUserInfo(e) {
-    let userInfo = e.detail.userInfo;
-    wx.cloud.callFunction({
-      name: 'login',
-      complete: res => {
-        userInfo.openid = res.result.openid;
-        this.setData({
-          userInfo
-        })
-        wx.setStorageSync('userInfo', userInfo)
-      }
+    console.log(e, 'eeee');
+    const userInfo = e.detail.userInfo
+    this.setData({
+      userInfo
     })
+    wx.setStorageSync('userInfo', userInfo)
+    // let userInfo = e.detail.userInfo;
+    // wx.cloud.callFunction({
+    //   name: 'login',
+    //   complete: res => {
+    //     console.log(res);
+    //     userInfo.openid = res.result.openid;
+    //     this.setData({
+    //       userInfo
+    //     })
+    //     wx.setStorageSync('userInfo', userInfo)
+    //   }
+    // })
 
   },
   /**

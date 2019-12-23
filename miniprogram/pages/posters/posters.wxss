@@ -1,0 +1,12 @@
+/* miniprogram/pages/posters/posters.wxss */
+.posters-box{
+  padding: 5%;
+}
+.operation{
+  text-align: center;
+}
+.operation-title{
+  margin-bottom: 20rpx;
+  color: #999999;
+  font-size: 30rpx;
+}

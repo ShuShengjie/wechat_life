@@ -1,6 +1,7 @@
 <!--index.wxml-->
 <view class="container" wx:if="{{!isPedding}}">
   <van-notice-bar mode="closeable" scrollable="false" text="{{barText}}" />
+  <sign-in class="signIn"></sign-in>
   <!-- 今日温度 -->
   <view class="weather-place">
     <view class="weather-city">{{weatherToday.city}}</view>

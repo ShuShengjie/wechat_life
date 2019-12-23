@@ -12,13 +12,24 @@ exports.main = async (event, context) => {
   if (!userId) return
 
   try{
-    return await db.collection('create_target')
+    const createList = await db.collection('create_target')
       .where({
         userId,
         createDate: _.gte(firstDay), 
         createDate: _.lt(+firstDay + 24 * 60 * 60 * 1000 * 7)
       })
       .get()
+    const listCount = await db.collection('create_target')
+      .where({
+        userId,
+        createDate: _.gte(firstDay),
+        createDate: _.lt(+firstDay + 24 * 60 * 60 * 1000 * 7)
+      })
+      .count()
+     return {
+       createList,
+       listCount
+     }
   }catch(e) {
     console.log(e);
   }

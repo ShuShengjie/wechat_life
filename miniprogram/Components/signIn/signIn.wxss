@@ -1,0 +1,5 @@
+/* Components/signIn/signIn.wxss */
+.signIn{
+  width: 70rpx;
+  height: 70rpx;
+}

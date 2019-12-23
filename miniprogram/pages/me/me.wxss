@@ -1,1 +1,62 @@
 /* miniprogram/pages/me/me.wxss */
+
+.me-box {
+  background: #efefef;
+  height: 100vh;
+}
+
+.userinfo-box {
+  position: relative;
+  height: 400rpx;
+  margin: 0 3%;
+  background: #fff;
+  border-radius: 30rpx;
+  border: 1rpx solid transparent;
+}
+
+.user-avatar {
+  margin: 20rpx;
+  width: 140rpx;
+  height: 140rpx;
+}
+
+.user-avatar > image {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+}
+
+.select-item{
+  position: relative;
+  height: 80rpx;
+  padding: 0 3%;
+  line-height: 80rpx;
+  font-size: 30rpx;
+  border-bottom: 2rpx solid #efefef;
+  background: #fff;
+}
+
+.arrow {
+  position: absolute;
+  top: 35%;
+  right: 0%;
+  transform: rotate(90deg);
+}
+
+.arrow:before, .arrow:after {
+  position: absolute;
+  content: '';
+  border-top: 10rpx transparent dashed;
+  border-left: 10rpx transparent dashed;
+  border-right: 10rpx transparent dashed;
+  border-bottom: 10rpx #fff solid;
+}
+
+.arrow:before {
+  border-bottom: 10rpx #333 solid;
+}
+
+.arrow:after {
+  top: 1rpx; /*覆盖并错开1px*/
+  border-bottom: 10rpx #fff solid;
+}

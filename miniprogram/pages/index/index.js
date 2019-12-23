@@ -1,4 +1,5 @@
 //index.js
+import { BMapWX_AK } from '../../config/config.js'
 const app = getApp()
 const bmap = require('../../utils/bmap-wx.min.js');
 // 今日天气类
@@ -40,7 +41,6 @@ Page({
             weRunData: wx.cloud.CloudID(cloudId)
           },
           success: ({ result }) => {
-            console.log(result, 'result');
             const todayRunCount = result[result.length - 1].step;
             this.setData({
               runCount: todayRunCount
@@ -108,8 +108,6 @@ Page({
           barText,
           isPedding: false,
         })
-        console.log(res, 'weawww');
-        console.log(this.data.weatherClass, 'dddwwww');
       }
     });
   },
@@ -120,7 +118,7 @@ Page({
     this.getRunData();
     this.setData({
       BMap: new bmap.BMapWX({
-        ak: 'lL1PUa4x1xZSvfqT1j5fIvaQs9UtUbAp'
+        ak: BMapWX_AK
       })
     })
     this.getWeather()
@@ -133,60 +131,15 @@ Page({
 
   },
   /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-    console.log(1);
     this.getRunData();
     this.getWeather()
     setTimeout(function () {
       // 不加这个方法真机下拉会一直处于刷新状态，无法复位
       wx.stopPullDownRefresh()
-      // wx.pageScrollTo({
-      //   scrollTop: 0,
-      // })
       console.log(2);
     }, 2000)
   },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
-  }
 })

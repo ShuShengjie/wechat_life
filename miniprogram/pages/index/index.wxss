@@ -1,4 +1,13 @@
 /**index.wxss**/
+.container{
+  position: relative;
+}
+
+.signIn{
+  position: fixed;
+  top: 80rpx;
+  right: 20rpx;
+}
 
 .echarts {
   position: relative;

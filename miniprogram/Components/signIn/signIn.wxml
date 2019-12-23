@@ -1,0 +1,4 @@
+<!--Components/signIn/signIn.wxml-->
+<view>
+  <image src="../../images/signIn.png" class="signIn" bind:tap="savePosters"></image>
+</view>

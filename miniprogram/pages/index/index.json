@@ -3,6 +3,7 @@
     "ec-canvas": "../../ec-canvas/ec-canvas",
     "today-run": "../todayRun/todayRun",
     "week-temp": "../weekTemp/weekTemp",
+    "sign-in": "../../Components/signIn/signIn",
     "van-notice-bar": "@vant/weapp/notice-bar"
   },
   "navigationBarTitleText": "首页",

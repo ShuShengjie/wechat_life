@@ -4,7 +4,8 @@ import Toast from '@vant/weapp/toast/toast';
 import TimeUtils from '../../utils/timeUtils';
 import Utils from '../../utils/utils.js';
 import { TimerState } from '../../config/timerState.js';
-
+import EditController from '../../lifeSite/EditController.js';
+import LoginController from '../../lifeSite/LoginController.js';
 
 const app = getApp()
 Page({
@@ -23,6 +24,8 @@ Page({
     // 当前进行的目标计时
     timer: '00:00:00',
     stateDesc: '',
+    // 本周累计目标总数
+    weekTotal: 0,
     // 图表所需数据
     echartList: [],
     echartsTotal: '',
@@ -86,38 +89,38 @@ Page({
   },
   // 添加目标
   addTarget(e) {
-    wx.cloud.callFunction({
-      name: 'createTarget',
-      data: {
-        targetTitle: e.detail,
-        userId: wx.getStorageSync('openid')
-      },
-      complete: res => {
-        Notify({ type: 'success', message: '新增目标成功' });
+    if (this.data.weekTotal >= 3) {
+      Notify({
+        type: 'warning',
+        message: '本周累计目标超过8条，给自己放个假把'
+      });
+      return
+    }
+    EditController.createTarget(e.detail, wx.getStorageSync('openid'))
+      .then(res => {
+        Notify({
+          type: 'success',
+          message: '新增目标成功'
+        });
         this.getTargetList();
-      }
-    })
+      })
   },
   // 获取所有目标
   getTargetList() {
     const firstDay = TimeUtils.getFirstdayDateZeroTime(Date.now());
-    wx.cloud.callFunction({
-      name: 'getTargetList',
-      data: {
-        userId: wx.getStorageSync('openid'),
-        firstDay
-      },
-      complete: res => {
+    EditController.getTargetList(wx.getStorageSync('openid'), firstDay)
+      .then(res => {
         let echartList = [];
         let echartsTotal = 0;
         this.data.showEcharts = false;
+        this.data.weekTotal = res.result.listCount.total;
         // 使用了深拷贝，返回的对象是对象数组
-        let targetList = Utils.deepClone(res.result.data);
+        let targetList = Utils.deepClone(res.result.createList.data);
         echartList = new Array(targetList.length);
-        res.result.data.forEach((data, index) => {
+        res.result.createList.data.forEach((data, index) => {
           echartsTotal += data.time;
           targetList[index].time = TimeUtils.formatDurationToStr(data.time)
-          targetList[index].lastUpdate = TimeUtils.formatFullDate(data.lastUpdate)
+          targetList[index].lastUpdate = data.lastUpdate ? TimeUtils.formatFullDate(data.lastUpdate) : data.lastUpdate
           echartList[index] = {};
           echartList[index].name = data.title
           echartList[index].value = data.time
@@ -129,8 +132,7 @@ Page({
           echartsTotal: TimeUtils.formatDurationToStr(echartsTotal),
           showEcharts: true
         })
-      }
-    })
+      })
   },
   // 进入详情页
   gotoEditDetail(e) {
@@ -142,21 +144,18 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
-    // this.getTargetList();
+  onLoad: function(options) {
   },
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function () {
+  onShow: function() {
     if (!wx.getStorageSync('openid')) {
-      wx.cloud.callFunction({
-        name: 'login',
-        success: res => {
+      LoginController.login()
+        .then(res => {
           wx.setStorageSync('openid', res.result.openid)
           this.getTargetList();
-        }
-      })
+        })
     } else {
       this.getTargetList();
     }

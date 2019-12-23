@@ -1,4 +1,16 @@
 <!--miniprogram/pages/me/me.wxml-->
 <view class="me-box">
-  <van-button type="primary" open-type="getUserInfo" bindgetuserinfo="getUserInfo" >按钮</van-button>
+  <van-button type="primary" open-type="getUserInfo" bindgetuserinfo="getUserInfo">按钮</van-button>
+  <!-- 用户信息卡片 -->
+  <view class="userinfo-box">
+    <view class="user-avatar">
+      <image src="{{userInfo.avatarUrl}}"></image>
+    </view>
+    <view>{{userInfo.nickName}}</view>
+  </view>
+  <!-- 选项卡 -->
+  <view>
+    <view class="select-item">查看本周目标指数<text class="arrow"></text></view>
+    <view class="select-item">查看运动指数<text class="arrow"></text></view>
+  </view>
 </view>

@@ -2,6 +2,7 @@
 import TimeUtils from '../../utils/timeUtils.js';
 import Notify from '@vant/weapp/notify/notify';
 import Toast from '@vant/weapp/toast/toast';
+import EditDetailController from '../../lifeSite/EditDetailController.js';
 
 const app = getApp();
 
@@ -35,19 +36,13 @@ Page({
   },
   // 添加目标
   addTarget(e) {
-    wx.cloud.callFunction({
-      name: 'modifyTarget',
-      data: {
-        modifyTitle: e.detail,
-        targetId: this.data.editDetails._id
-      },
-      complete: res => {
+    EditDetailController.modifyTarget(e.detail, this.data.editDetails._id)
+      .then(res => {
         this.setData({
           editTitle: res.result
         })
         Notify({ type: 'success', message: '修改目标成功' });
-      }
-    })
+      })
   },
   // 删除目标名称
   deleteTargetTitle() {
@@ -55,17 +50,12 @@ Page({
       title: '你确定想当一条咸鱼吗',
       success: res => {
         if (res.confirm) {
-          wx.cloud.callFunction({
-            name: 'deleteTarget',
-            data: {
-              targetId: this.data.editDetails._id
-            },
-            success: res => {
+          EditDetailController.deleteTargetTitle(this.data.editDetails._id)
+            .then(res => {
               wx.navigateBack({
                 delta: 1
               })
-            }
-          })
+            })
         }
       }
     })
@@ -87,21 +77,17 @@ Page({
     })
   },
   getEditRecords(targetId) {
-    wx.cloud.callFunction({
-      name: 'getTargetRecords',
-      data: {
-        targetId
-      },
-      success: async res => {
-        let records = res.result.data[0].records;
-        if (records) {
+    EditDetailController.getEditRecords(targetId)
+      .then(res => {
+        if (res.result.data[0] && res.result.data[0].records) {
+          let records = res.result.data[0].records;
           let recordsList = [];
           console.log(11)
           recordsList = new Array(records.length);
           // recordsList = new Array(records.length).fill({})
           // recordsList = [{}, {}];
           console.log(recordsList, '0000000000')
-          await records.forEach((record, index) => {
+          records.forEach((record, index) => {
             console.log(record, index, '11111111111');
             recordsList[index] = {};
             recordsList[index].conclusion = record.conclusion;
@@ -114,13 +100,12 @@ Page({
           this.setData({
             recordsList
           })
-          
+
         }
         this.setData({
           loading: true
         })
-      }
-    })
+      })
   },
   /**
    * 生命周期函数--监听页面加载
@@ -136,7 +121,6 @@ Page({
     // this.getEditRecords(this.data.eid);
   },
   onShow() {
-    console.log(this.data.eid)
     this.getEditRecords(this.data.eid);
   }
 })

@@ -49,7 +49,6 @@ Component({
       this.weekTimeOption = new WeekTimeOption();
       this.weekTimeOption.total = this.data.echartsTotal;
       this.weekTimeOption.dataList = this.data.echartList;
-      console.log(this.data.echartList)
       const option = this.weekTimeOption.getOption;
       this.chart.setOption(option);
     },
