@@ -19,9 +19,7 @@ Component({
    */
   methods: {
     savePosters() {
-      wx.navigateTo({
-        url: '/pages/posters/posters',
-      })
+      this.triggerEvent('savePosters', true);
     }
   }
 })

@@ -130,16 +130,23 @@ Page({
     })
 
   },
+  savePosters(e) {
+    let todayWeather = JSON.stringify(this.data.weatherToday);
+    if (e.detail) {
+      wx.navigateTo({
+        url: '/pages/posters/posters?todayWeather=' + todayWeather,
+      })
+    }
+  },
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
     this.getRunData();
     this.getWeather()
-    setTimeout(function () {
+    setTimeout(() => {
       // 不加这个方法真机下拉会一直处于刷新状态，无法复位
       wx.stopPullDownRefresh()
-      console.log(2);
     }, 2000)
   },
 })

@@ -1,9 +1,12 @@
 export default class QrcodeController { 
   // 登录获取openid
-  static getQrCode() {
+  static getQrCode(page, scene) {
     return wx.cloud.callFunction({
       name: 'getQrCode',
-      data: {}
+      data: {
+        page,
+        scene
+      }
     })
   }
 }

@@ -10,3 +10,11 @@
   color: #999999;
   font-size: 30rpx;
 }
+.posters-canvas{
+  width: 300px;
+  height: 450px;
+}
+.poster-box{
+  border-radius: 30rpx;
+  box-shadow: 0 0 10rpx 0 #f00;
+}

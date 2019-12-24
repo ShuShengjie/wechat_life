@@ -35,8 +35,14 @@ App({
       // 目标暂停了多少时间
       pauseDuration: 0,
       // 目标持续时间
-      duration: 0
+      duration: 0,
+      // 场景值
+      scene: 0
     }
+  },
+  onShow(res) {
+    console.log(res.scene, 'scene');
+    this.globalData.scene = res.scene;
   },
   // 开始计时
   startTimer(targetId, targetTitle, onCount) {

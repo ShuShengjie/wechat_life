@@ -1,12 +1,13 @@
 <!--miniprogram/pages/posters/posters.wxml-->
 <view class="posters-box">
   <!-- 海报 -->
-  <canvas canvas-id="posters-canvas" 
-    style="width:{{config.canvasWidth}}px;height:{{config.canvasHeight}}px"></canvas>
-
+  <!-- <view class="poster-box"> -->
+    <canvas canvas-id="posters-canvas" class="posters-canvas"></canvas>
+  <!-- </view> -->
+  <!-- style="width:{{config.canvasWidth}}px;height:{{config.canvasHeight}}px" -->
   <view class="operation">
     <view class="operation-title">保存至相册，分享到朋友圈</view>
-    <van-button icon="down" round color="#91bef0">保存</van-button>
+    <van-button icon="down" round color="#91bef0" bind:tap="savePosters">保存</van-button>
   </view>
   
 </view>

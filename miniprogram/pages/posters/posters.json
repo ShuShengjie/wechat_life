@@ -2,5 +2,5 @@
   "usingComponents": {
     "van-button": "@vant/weapp/button"
   },
-  "navigationBarTitleText": ""
+  "navigationBarTitleText": "海报"
 }
