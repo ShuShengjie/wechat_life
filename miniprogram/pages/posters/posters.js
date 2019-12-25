@@ -8,24 +8,14 @@ Page({
    * 页面的初始数据
    */
   data: {
-    userInfo: wx.getStorageSync('userInfo') || {},
     config: {},
-  },
-  // 设置canvas尺寸自适应
-  setCanvasInfo() {
-    let rpx = 1;
-    wx.getSystemInfo({
-      success(res) {
-        rpx = res.windowWidth / 375;
-      },
-    })
+    loading: true
   },
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
+  onLoad: async function(options) {
     const todayWeather = JSON.parse(options.todayWeather)
-    console.log(todayWeather)
     wx.showLoading({
       title: '生成中...',
       mask: true,
@@ -34,45 +24,85 @@ Page({
     const {
       windowWidth
     } = wx.getSystemInfoSync();
-    config.canvasWidth = parseInt(windowWidth * 0.8);
+    const radio = windowWidth / 375;
+    config.canvasWidth = 300 * radio;
     config.canvasHeight = parseInt(config.canvasWidth * 1.5);
     this.setData({
       config
     })
     // /pages/index/index
-    const indexPage = ''
-    QrcodeController.getQrCode(indexPage, app.globalData.scene)
-      .then(res => {
-        wx.cloud.getTempFileURL({
-          fileList: [res.result.wxacodefileID],
-          success: file => {
-
-            wx.downloadFile({
-              url: file.fileList[0].tempFileURL,
-              success: code => {
-                wx.hideLoading();
-                const qrCode = code.tempFilePath;
-                const bgCode = '../../images/posters.png';
-                const ctx = wx.createCanvasContext('posters-canvas');
-                ctx.drawImage(bgCode, 0, 0, 300, 350);
-                ctx.drawImage(qrCode, 210, 360, 80, 80);
-                this.setText(ctx, 20, '#fff', 20, 30, todayWeather.city);
-                this.setText(ctx, 20, '#fff', 20, 55, todayWeather.temp);
-                this.setText(ctx, 16, '#fff', 20, 80, todayWeather.weather);
-                this.setText(ctx, 16, '#fff', 20, 105, todayWeather.wind);
-                this.setText(ctx, 14, '#999999', 40, 400, '微信扫码或长按识别');
-                this.setText(ctx, 14, '#999999', 40, 420, '重拳出击');
-                ctx.draw()
-              },
-              fail: err => {
-                console.log(err)
-              }
-            })
-          },
-        })
+    const indexPage = '';
+    const fileId = await QrcodeController.getQrCode(indexPage, app.globalData.scene);
+    const fileUrl = await QrcodeController.getTempFileURL([fileId.result.wxacodefileID]);
+    QrcodeController.downloadFile(fileUrl.fileList[0].tempFileURL)
+      .then(code => {
+        this.drawPoster(code, todayWeather, radio);
       })
-
   },
+  // 绘制海报
+  drawPoster(code, todayWeather, radio) {
+    wx.hideLoading();
+    const { config } = this.data;
+    const { canvasWidth, canvasHeight } = config;
+    const qrCode = code.tempFilePath;
+    const bgCode = '../../images/posters.png';
+    const ctx = wx.createCanvasContext('posters-canvas');
+    this.roundRect(ctx, 0, 0, 300 * radio, 450 * radio, 10 * radio);
+    ctx.drawImage(bgCode, 0, 0, 300 * radio, 350 * radio);
+    ctx.drawImage(qrCode, 210 * radio, 360 * radio, 80 * radio, 80 * radio);
+    // ctx.shadowOffsetX = 0;
+    // ctx.shadowOffsetY = 10;
+    // ctx.shadowColor = '#efefef';
+    // ctx.shadowBlur = 10;
+    this.setText(ctx, 20 * radio, '#fff', 20 * radio, 30 * radio, todayWeather.city);
+    this.setText(ctx, 20 * radio, '#fff', 20 * radio, 55 * radio, todayWeather.temp);
+    this.setText(ctx, 16 * radio, '#fff', 20 * radio, 80 * radio, todayWeather.weather);
+    this.setText(ctx, 16 * radio, '#fff', 20 * radio, 105 * radio, todayWeather.wind);
+    this.setText(ctx, 14 * radio, '#999999', 40 * radio, 400 * radio, '微信扫码或长按识别');
+    this.setText(ctx, 14 * radio, '#999999', 40 * radio, 420 * radio, '重拳出击');
+    ctx.draw()
+    this.setData({
+      loading: false
+    })
+  },
+  // 绘制圆角
+  roundRect(ctx, x, y, w, h, r) {
+    // 开始绘制
+    ctx.beginPath()
+    ctx.setFillStyle('transparent')
+    // 左上角
+    ctx.arc(x + r, y + r, r, Math.PI, Math.PI * 1.5)
+
+    // border-top
+    ctx.moveTo(x + r, y)
+    ctx.lineTo(x + w - r, y)
+    ctx.lineTo(x + w, y + r)
+    // 右上角
+    ctx.arc(x + w - r, y + r, r, Math.PI * 1.5, Math.PI * 2)
+
+    // border-right
+    ctx.lineTo(x + w, y + h - r)
+    ctx.lineTo(x + w - r, y + h)
+    // 右下角
+    ctx.arc(x + w - r, y + h - r, r, 0, Math.PI * 0.5)
+
+    // border-bottom
+    ctx.lineTo(x + r, y + h)
+    ctx.lineTo(x, y + h - r)
+    // 左下角
+    ctx.arc(x + r, y + h - r, r, Math.PI * 0.5, Math.PI)
+
+    // border-left
+    ctx.lineTo(x, y + r)
+    ctx.lineTo(x + r, y)
+
+    // 这里是使用 fill 还是 stroke都可以，二选一即可，但是需要与上面对应
+    ctx.fill()
+    ctx.closePath()
+    // 剪切
+    ctx.clip()
+  },
+  // 绘制文本
   setText(context, fs, color, x, y, c) {
     context.setFontSize(fs);
     context.setFillStyle(color);
@@ -98,62 +128,19 @@ Page({
               showCancel: false,
               confirmText: '好的',
               confirmColor: '#333',
-              success: function (res) {
-                if (res.confirm) { }
-              },
-              fail: function (res) { }
+              success: res => {
+                if (res.confirm) {
+                  setTimeout(() => {
+                    wx.navigateBack({
+                      delta: 1
+                    }, 500)
+                  })
+                }
+              }
             })
           }
         })
       }
     })
   },
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function() {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function() {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function() {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function() {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function() {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function() {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function() {
-
-  }
 })

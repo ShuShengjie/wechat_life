@@ -1,8 +1,9 @@
 <!--miniprogram/pages/posters/posters.wxml-->
-<view class="posters-box">
+<view class="posters-box" hidden="{{loading}}">
   <!-- 海报 -->
   <!-- <view class="poster-box"> -->
-    <canvas canvas-id="posters-canvas" class="posters-canvas"></canvas>
+    <canvas canvas-id="posters-canvas" class="posters-canvas" 
+    style="width:{{config.canvasWidth}}px;height:{{config.canvasHeight}}px"></canvas>
   <!-- </view> -->
   <!-- style="width:{{config.canvasWidth}}px;height:{{config.canvasHeight}}px" -->
   <view class="operation">
